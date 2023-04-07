@@ -1,13 +1,22 @@
+@font-face {
+  font-family: 'LaTequila';
+  src: local('LaTequila'), url(./assets/fonts/LaTequila.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'LaTequilaOut';
+  src: local('LaTequilaOut'), url(./assets/fonts/LaTequilaOut.ttf) format('truetype');
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+h1 {
+  font-family: 'LaTequilaOut';
+  margin: 0;
+  padding-top: 5%;
 }
