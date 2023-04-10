@@ -1,0 +1,12 @@
+.infoBar-wrapper{
+    background-color:rgba(0, 0, 0, .7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.infoBar-wrapper p {
+    font-family: 'Proza Libre', sans-serif;
+    color: wheat;
+}

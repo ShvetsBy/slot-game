@@ -1,7 +1,8 @@
 import React from "react";
+import "./App.css";
 import { GameWrapper } from './components/gameWrapper/gameWrapper'
 import { Reels } from './components/reels/reels'
-import "./App.css";
+import { InfoBar } from "./components/infoBar/infoBar";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       </p>
       <GameWrapper >
         <Reels />
+        <InfoBar />
       </GameWrapper>
     </div>
   );

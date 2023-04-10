@@ -23,7 +23,6 @@ const cardsImg = {
 
 export const Reels = () => {
     const cards = cardsData.map((el) => <img src={cardsImg[el.name]} alt={el.name} key={el.id}/>)
-
     return (<div className='reels-wrapper'>{cards}</div>)
-    //return (<img src={d} alt={cardsData[0].name} />)
+
 }

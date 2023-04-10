@@ -4,5 +4,9 @@
     background-image: url('../../assets/img/back-3.jpg');
     background-size: cover;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
 
 }
