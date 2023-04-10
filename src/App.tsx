@@ -1,4 +1,6 @@
 import React from "react";
+import { GameWrapper } from './components/gameWrapper/gameWrapper'
+import { Reels } from './components/reels/reels'
 import "./App.css";
 
 function App() {
@@ -11,6 +13,9 @@ function App() {
         on this website. For real money betting, please refer to our licenced
         casino partners that are advertised.
       </p>
+      <GameWrapper >
+        <Reels />
+      </GameWrapper>
     </div>
   );
 }
