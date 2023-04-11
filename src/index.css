@@ -21,3 +21,7 @@ h1 {
   margin: 0;
   padding-top: 3%;
 }
+
+.spin-wheel{
+  background-image: url('./assets/img/fire-rounded.png');
+}

@@ -1,0 +1,59 @@
+@font-face {
+    font-family: 'LaTequila';
+    src: local('LaTequila'), url(../../assets/fonts/LaTequila.ttf) format('truetype');
+  }
+
+.wrapper{
+    display: flex;
+    justify-content: space-around;
+    background-image: url('../../assets/img/firecamp-sparks.png');
+    background-position: center;
+    background-color:  rgba(0, 0, 0, .8);
+    background-blend-mode: darken;
+    padding-top: 8px;
+    padding-bottom: 12px;
+    position: relative;
+}
+
+.button-wrapper{
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.data-title{
+    font-family: 'LaTequila', sans-serif;
+    color: wheat;
+    font-size: 12px;
+    margin: 0;
+}
+
+.data-value{
+    font-family: 'Chango', cursive;
+    color: wheat;
+    margin: 0;
+}
+
+.adjust-button {
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    font-family: 'Chango', cursive;
+    color: wheat;
+    background-image: url('../../assets/patterns/capmfire-sparks.jpg');
+    background-size: contain;
+ 
+}
+
+.spin-wheel-wrapper {
+    position: absolute;
+    bottom: -36px;
+    left: 424px
+   
+}
+.spin-wheel {
+    width: 9rem;
+    height: 9rem;
+    
+}
