@@ -6,6 +6,6 @@ interface GameWrapperProps {
   }
 
 export const GameWrapper: FC<GameWrapperProps> = ({children}) => {
-    return <div className='game-wrapper'>{children}</div>
+    return <div className='game-wrapper' id='reels'>{children}</div>
 
 }
