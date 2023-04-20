@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { GameWrapper } from './components/gameWrapper/gameWrapper'
-//import { reels } from './components/reels/reels'
+import { Reels } from './components/reels/reels'
 import { ControlPanel } from './components/controlPanel/controlPanel'
 import { InfoBar } from "./components/infoBar/infoBar";
 //import { Spin } from "./components/controlPanel/spin";
@@ -18,10 +18,9 @@ function App() {
         casino partners that are advertised.
       </p>
       <GameWrapper >
-        {/* <Reels /> */}
+        <Reels />
         <div>
           <ControlPanel />
-          {/* <Spin /> */}
           <InfoBar />
         </div>
     
