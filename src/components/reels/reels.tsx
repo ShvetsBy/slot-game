@@ -28,11 +28,9 @@ const cardsImg = {
     ACard, JCard, KCard, QCard, Flamingo, Plane, FreeSpins, CatchMe, Gun, WalkieTalkie, WildCard, WildFire, Jerk, Girl
 }
 
-
-
-
-
-
+export type reelPosition = {
+    x: number
+}
 
 
 export const Reels = () => {
@@ -43,35 +41,62 @@ export const Reels = () => {
 
     const ReelContainer = (props) => {
         const x = props.x;
+        const shuffledReel = cardsData
+        .map(value => ({ value, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ value }) => value);
 
         return(
             <Container width={SYMBOL_WIDTH} x={x}>
-               {cardsData.map((el, i) => 
+               {shuffledReel.map((el, i) => 
                 <Sprite
                 image={cardsImg[el.name]}
                 y={i * SYMBOL_HEIGHT }
+                key={el.id}
                 />) }
             </Container>
         )
- 
     }
 
     const ReelsContainer = () => {
+        const row: Array<reelPosition> = [];
+        for(let i = 0; i < REELS_QUANTITY; i++){
+            const reelPosition =  i * SYMBOL_WIDTH;
+            const item: reelPosition = {
+                x: 0
+            };
+            item.x = reelPosition;
+            row.push(item);
+        }
+
+        return(
+         <>
+          {row.map((el, i) => 
+                <ReelContainer x={el.x} key={i}/> )}
+         </>
+              
+         
+        )
+    }
+
+    const ReelsContainerWrapper = () => {
         return(
             <Container width={SYMBOL_WIDTH * REELS_QUANTITY} height={SYMBOL_HEIGHT * SYMBOLS_QUANTITY} x={152} y={25}>
-                    <ReelContainer x={0} />
-                    <ReelContainer x={144}/>
-                    <ReelContainer x={288}/>
-                    <ReelContainer x={432}/>
-                    <ReelContainer x={576}/> 
+                <ReelsContainer />
             </Container>
         )
- 
     }
 
     return (
-        <Stage width={1024} height={638}>
-            <ReelsContainer />
+        <Stage width={1024} height={638} options={{  backgroundAlpha: 0.6, }}>
+            <Sprite
+                image=".."
+                scale={{ x: 0.5, y: 0.5 }}
+                anchor={0.5}
+                x={150}
+                y={150}
+            />
+            <ReelsContainerWrapper />
         </Stage>
     )
 
