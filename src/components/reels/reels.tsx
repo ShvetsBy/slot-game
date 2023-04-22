@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState}from 'react';
 import './reels.css'
 import {  Stage,
     PixiComponent,
@@ -38,25 +38,56 @@ export const Reels = () => {
     const SYMBOL_HEIGHT = 196;
     const REELS_QUANTITY = 5;
     const SYMBOLS_QUANTITY = 3;
+    const SPIN_TIME = 100;
+   
+    const [ isRunning, setIsRunning ] = useState(false);
+    const [ reelData, setReelData ] = useState(cardsData);
+
+    useEffect(()=>{
+        const reelDataWithY = [...reelData]
+        reelDataWithY.map((el, i) => el.y = i);
+        setReelData(reelDataWithY);
+    },[])
+ 
+
+    const click = () => {
+        const updatedReel = [...reelData]; 
+        updatedReel.map((el) => {
+            if(el.y < 13) {
+                el.y += 1
+            } else {el.y = 0}
+          });
+        setReelData(updatedReel)
+      
+       
+    } 
+   // console.log(reelData)
+
+    // const shuffledReel = cardsData
+    // .map(value => ({ value, sort: Math.random() }))
+    // .sort((a, b) => a.sort - b.sort)
+    // .map(({ value }) => value);
+    // console.log(shuffledReel)
 
     const ReelContainer = (props) => {
         const x = props.x;
-        const shuffledReel = cardsData
-        .map(value => ({ value, sort: Math.random() }))
-        .sort((a, b) => a.sort - b.sort)
-        .map(({ value }) => value);
+        const data = props.data
+        let idx = 0;
 
         return(
             <Container width={SYMBOL_WIDTH} x={x}>
-               {shuffledReel.map((el, i) => 
-                <Sprite
+              {data.map((el) => 
+               <Sprite
                 image={cardsImg[el.name]}
-                y={i * SYMBOL_HEIGHT }
+                y={SYMBOL_HEIGHT * el.y}
                 key={el.id}
-                />) }
+                />
+       ) }
             </Container>
         )
     }
+
+    
 
     const ReelsContainer = () => {
         const row: Array<reelPosition> = [];
@@ -72,7 +103,7 @@ export const Reels = () => {
         return(
          <>
           {row.map((el, i) => 
-                <ReelContainer x={el.x} key={i}/> )}
+                <ReelContainer x={el.x} data={reelData}key={i}/> )}
          </>
               
          
@@ -81,21 +112,14 @@ export const Reels = () => {
 
     const ReelsContainerWrapper = () => {
         return(
-            <Container width={SYMBOL_WIDTH * REELS_QUANTITY} height={SYMBOL_HEIGHT * SYMBOLS_QUANTITY} x={152} y={25}>
+            <Container width={SYMBOL_WIDTH * REELS_QUANTITY} height={SYMBOL_HEIGHT * SYMBOLS_QUANTITY} x={152} y={5} >
                 <ReelsContainer />
             </Container>
         )
     }
 
     return (
-        <Stage width={1024} height={638} options={{  backgroundAlpha: 0.6, }}>
-            <Sprite
-                image=".."
-                scale={{ x: 0.5, y: 0.5 }}
-                anchor={0.5}
-                x={150}
-                y={150}
-            />
+        <Stage width={1024} height={638} options={{  backgroundAlpha: 0.6, }} onClick={click}>
             <ReelsContainerWrapper />
         </Stage>
     )

@@ -1,5 +1,5 @@
 export const cardsData = [
-  { id: "1", name: "ACard", value: "low", img: "../assets/cards/a-card.png" },
+  { id: "1", name: "ACard", value: "low", img: "../assets/cards/a-card.png" }, 
   { id: "2", name: "JCard", value: "low", img: "../assets/cards/j-card.png" },
   { id: "3", name: "KCard", value: "low", img: "../assets/cards/k-card.png" },
   { id: "4", name: "QCard", value: "low", img: "../assets/cards/q-card.png" },
