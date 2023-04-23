@@ -42,13 +42,30 @@ export const Reels = () => {
    
     const [ isRunning, setIsRunning ] = useState(false);
     const [ reelData, setReelData ] = useState(cardsData);
+    const [ allReelsData, setAllReelsData ] = useState<any[]>([]);
+
+    const getShuffledPos = (arr) => {
+        const shuffledArr = arr.map(value => ({ value, sort: Math.random() })).sort((a, b) => a.sort - b.sort).map(({ value }) => value);
+        return shuffledArr;
+    }
 
     useEffect(()=>{
-        const reelDataWithY = [...reelData]
-        reelDataWithY.map((el, i) => el.y = i);
-        setReelData(reelDataWithY);
-    },[])
- 
+        const yPositions:Array<number> = [];
+        
+        for(let i = 0; i < reelData.length; i++ ){
+            yPositions.push(i);
+        }
+
+        for(let i = 0; i < REELS_QUANTITY; i++){
+            const shuffleYpos = getShuffledPos(yPositions);
+            const reelDataWithY = [...reelData];
+            reelDataWithY.map((el, i) => {
+                el.y = shuffleYpos[i]}
+            );
+            setReelData(reelDataWithY);            
+            setAllReelsData((prev) => [...prev, reelData])
+        }
+    },[]);
 
     const click = () => {
         const updatedReel = [...reelData]; 
@@ -61,18 +78,10 @@ export const Reels = () => {
       
        
     } 
-   // console.log(reelData)
-
-    // const shuffledReel = cardsData
-    // .map(value => ({ value, sort: Math.random() }))
-    // .sort((a, b) => a.sort - b.sort)
-    // .map(({ value }) => value);
-    // console.log(shuffledReel)
 
     const ReelContainer = (props) => {
         const x = props.x;
         const data = props.data
-        let idx = 0;
 
         return(
             <Container width={SYMBOL_WIDTH} x={x}>
@@ -100,14 +109,15 @@ export const Reels = () => {
             row.push(item);
         }
 
-        return(
-         <>
-          {row.map((el, i) => 
-                <ReelContainer x={el.x} data={reelData}key={i}/> )}
-         </>
-              
-         
-        )
+        if(allReelsData.length){
+            return(
+                <>
+                 {row.map((el, i) => 
+                       <ReelContainer x={el.x} data={allReelsData[i]} key={i}/> )}
+                </>
+               )
+        } else return null
+       
     }
 
     const ReelsContainerWrapper = () => {
