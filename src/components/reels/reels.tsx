@@ -1,4 +1,4 @@
-import React, {useEffect, useState}from 'react';
+import React, {useEffect, useRef, useState}from 'react';
 import './reels.css'
 import {  Stage,
     PixiComponent,
@@ -41,31 +41,33 @@ export const Reels = () => {
     const SPIN_TIME = 100;
    
     const [ isRunning, setIsRunning ] = useState(false);
-    const [ reelData, setReelData ] = useState(cardsData);
-    const [ allReelsData, setAllReelsData ] = useState<any[]>([]);
+    const [ reelData, setReelData ] = useState<any[]>(cardsData); 
+    const [ allReelData, setAllReelData ] = useState<any[]>([]); 
 
-    const getShuffledPos = (arr) => {
+    const getShuffled = (arr) => {
         const shuffledArr = arr.map(value => ({ value, sort: Math.random() })).sort((a, b) => a.sort - b.sort).map(({ value }) => value);
         return shuffledArr;
     }
 
-    useEffect(()=>{
-        const yPositions:Array<number> = [];
-        
-        for(let i = 0; i < reelData.length; i++ ){
-            yPositions.push(i);
+    const generateYPos = (number: number) => {
+        return [...Array(number).keys()]
+    }
+    
+    useEffect(()=>{    
+        for(let i = 0; i < REELS_QUANTITY; i++){
+            const reelDataWithY = reelData.map((el) => ({...el}));
+            const yPositions:Array<number> = getShuffled(generateYPos(reelData.length));
+            reelDataWithY.map((el, i) => {
+                el.y = yPositions[i]}
+            );
+ 
+            setReelData(reelDataWithY);   
+            setAllReelData((prev) => [...prev, reelDataWithY])
         }
 
-        for(let i = 0; i < REELS_QUANTITY; i++){
-            const shuffleYpos = getShuffledPos(yPositions);
-            const reelDataWithY = [...reelData];
-            reelDataWithY.map((el, i) => {
-                el.y = shuffleYpos[i]}
-            );
-            setReelData(reelDataWithY);            
-            setAllReelsData((prev) => [...prev, reelData])
-        }
     },[]);
+
+
 
     const click = () => {
         const updatedReel = [...reelData]; 
@@ -81,11 +83,11 @@ export const Reels = () => {
 
     const ReelContainer = (props) => {
         const x = props.x;
-        const data = props.data
+        const data = props.data;
 
         return(
             <Container width={SYMBOL_WIDTH} x={x}>
-              {data.map((el) => 
+              {data.map((el: { name: string | number; y: number; id: React.Key | null | undefined; }) => 
                <Sprite
                 image={cardsImg[el.name]}
                 y={SYMBOL_HEIGHT * el.y}
@@ -108,12 +110,12 @@ export const Reels = () => {
             item.x = reelPosition;
             row.push(item);
         }
-
-        if(allReelsData.length){
+ 
+        if(allReelData.length){
             return(
                 <>
                  {row.map((el, i) => 
-                       <ReelContainer x={el.x} data={allReelsData[i]} key={i}/> )}
+                       <ReelContainer x={el.x} data={allReelData[i]} key={i}/> )}
                 </>
                )
         } else return null
