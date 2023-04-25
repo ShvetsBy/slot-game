@@ -6,7 +6,8 @@ import {  Stage,
     AnimatedSprite,
     useApp,
     useTick, 
-    Sprite} from '@pixi/react';
+    Sprite,
+    AppProvider } from '@pixi/react';
 import { cardsData } from '../../content/cards';
 import ACard from '../../assets/cards/a-card.png';
 import JCard from '../../assets/cards/j-card.png';
@@ -44,6 +45,13 @@ export const Reels = () => {
     const [ reelData, setReelData ] = useState<any[]>(cardsData); 
     const [ allReelData, setAllReelData ] = useState<any[]>([]); 
 
+    // useTick(delta => {
+      
+    //     console.log(delta)
+     
+    //   });
+    
+
     const getShuffled = (arr) => {
         const shuffledArr = arr.map(value => ({ value, sort: Math.random() })).sort((a, b) => a.sort - b.sort).map(({ value }) => value);
         return shuffledArr;
@@ -60,31 +68,47 @@ export const Reels = () => {
             reelDataWithY.map((el, i) => {
                 el.y = yPositions[i]}
             );
- 
-            setReelData(reelDataWithY);   
             setAllReelData((prev) => [...prev, reelDataWithY])
+            
         }
-
+        
     },[]);
 
+    const reelRotation = (reelIndex) => {
+            const reel = [... allReelData[reelIndex]] 
+            reel.map((e) => {
+                    if(e.y < 13) {
+                        e.y += 1
+                    } else {e.y = 0}
+              });
+              setReelData(reel);
+      
+    }
 
+    const getRandom = (min, max)  => {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min; 
+      }
+
+    const spin = (position, times) => {
+        for(let i = 0; i < times; i++) {
+            reelRotation(position);
+        }
+    }
 
     const click = () => {
-        const updatedReel = [...reelData]; 
-        updatedReel.map((el) => {
-            if(el.y < 13) {
-                el.y += 1
-            } else {el.y = 0}
-          });
-        setReelData(updatedReel)
-      
+        spin(0, 100 + getRandom(1, 50))
+        spin(1, 200 + getRandom(1, 50))
+        spin(2, 300 + getRandom(1, 50))
+        spin(3, 400 + getRandom(1, 50))
+        spin(4, 500 + getRandom(1, 50))
        
     } 
 
     const ReelContainer = (props) => {
         const x = props.x;
         const data = props.data;
-
         return(
             <Container width={SYMBOL_WIDTH} x={x}>
               {data.map((el: { name: string | number; y: number; id: React.Key | null | undefined; }) => 
@@ -97,8 +121,6 @@ export const Reels = () => {
             </Container>
         )
     }
-
-    
 
     const ReelsContainer = () => {
         const row: Array<reelPosition> = [];
@@ -124,16 +146,18 @@ export const Reels = () => {
 
     const ReelsContainerWrapper = () => {
         return(
-            <Container width={SYMBOL_WIDTH * REELS_QUANTITY} height={SYMBOL_HEIGHT * SYMBOLS_QUANTITY} x={152} y={5} >
+            <Container width={SYMBOL_WIDTH * REELS_QUANTITY} height={SYMBOL_HEIGHT * SYMBOLS_QUANTITY} x={152} y={30} >
                 <ReelsContainer />
             </Container>
         )
     }
 
     return (
+        <AppProvider value={undefined}>
         <Stage width={1024} height={638} options={{  backgroundAlpha: 0.6, }} onClick={click}>
             <ReelsContainerWrapper />
         </Stage>
+        </AppProvider>
     )
 
 }
