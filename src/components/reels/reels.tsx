@@ -45,13 +45,6 @@ export const Reels = () => {
     const [ reelData, setReelData ] = useState<any[]>(cardsData); 
     const [ allReelData, setAllReelData ] = useState<any[]>([]); 
 
-    // useTick(delta => {
-      
-    //     console.log(delta)
-     
-    //   });
-    
-
     const getShuffled = (arr) => {
         const shuffledArr = arr.map(value => ({ value, sort: Math.random() })).sort((a, b) => a.sort - b.sort).map(({ value }) => value);
         return shuffledArr;
@@ -103,6 +96,82 @@ export const Reels = () => {
         spin(2, 300 + getRandom(1, 50))
         spin(3, 400 + getRandom(1, 50))
         spin(4, 500 + getRandom(1, 50))
+        const currentReelsState = allReelData.forEach(
+            (el) => el.filter((item) => item.y <=2 )
+        )
+
+        const result = () => {
+            const result: any[] = [];
+            for (let i = 0; i < allReelData.length; i++) {
+                const temp = allReelData[i].filter(item => item.y <= 2)
+                result.push(temp)
+            }
+            return result;
+        }
+
+        const isSame = (a,b) => {
+            return a === b;
+        };
+
+        const findInArray = (array, item, index, result) => {
+            let currentIndex = index;
+            const matchItem = array[currentIndex].find((el) => el.name === item.name);
+            if(matchItem){
+                result.push(matchItem);
+                currentIndex += 1;
+                if (currentIndex <= result.length) {
+                    findInArray(array, item, currentIndex, result)
+                }
+                
+                
+            }
+            // array[currentIndex].
+            // for(let i = 0; i < array.length; i++){
+            //     if (isSame(item, array[i])){
+            //         result.push(array[i])
+            //     }
+            // }
+        }
+
+        const checkWin = () => {
+            const results = result();
+            const winline: any[] = [];
+            const itemsToCheck = results.splice(0,1).flat();
+       
+
+            itemsToCheck.forEach((el) => {
+             //   console.log(el.name);
+                findInArray(results, el, 0, winline);
+            //     const
+
+
+
+            //    results.forEach((arr) => {
+            //        const winItem = arr.find((item) => el.name === item.name);
+                   
+            //         // console.log(arr)
+            //         // console.log("====")
+            //         if (winItem) {
+            //             console.log(winItem.name)
+            //             // winline.push(winItem)
+            //         }
+            //     })
+            });
+
+          console.log(winline)
+
+            // for (let i = 0; i < 3; i++) {
+            //     const currentItem = (results[0][i])
+
+            //     for (let j = 1; j < results.length; j++) {
+            //         findInArray(results[j], currentItem, winline)
+            //     }
+               
+            //     return checkWin();
+            // }
+        }
+
+        checkWin();
        
     } 
 
@@ -153,11 +222,11 @@ export const Reels = () => {
     }
 
     return (
-        <AppProvider value={undefined}>
+
         <Stage width={1024} height={638} options={{  backgroundAlpha: 0.6, }} onClick={click}>
             <ReelsContainerWrapper />
         </Stage>
-        </AppProvider>
+
     )
 
 }
