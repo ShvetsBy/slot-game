@@ -7,6 +7,7 @@ import {  Stage,
     useApp,
     useTick, 
     Sprite,
+    Text,
     AppProvider } from '@pixi/react';
 import { cardsData } from '../../content/cards';
 import ACard from '../../assets/cards/a-card.png';
@@ -23,6 +24,7 @@ import Jerk from '../../assets/cards/jerk-card.png';
 import Girl from '../../assets/cards/girl-card.png';
 import WildCard from '../../assets/cards/wild-card.png';
 import WildFire from '../../assets/cards/wild-fire.png';
+import { TextStyle } from 'pixi.js';
 
 
 const cardsImg = {
@@ -44,6 +46,8 @@ export const Reels = () => {
     const [ isRunning, setIsRunning ] = useState(false);
     const [ reelData, setReelData ] = useState<any[]>(cardsData); 
     const [ allReelData, setAllReelData ] = useState<any[]>([]); 
+    const [ hasWinner, setHasWinner ] = useState(false); 
+    const [winMsg, setWinMsg ] = useState('You win!!!')
 
     const getShuffled = (arr) => {
         const shuffledArr = arr.map(value => ({ value, sort: Math.random() })).sort((a, b) => a.sort - b.sort).map(({ value }) => value);
@@ -109,10 +113,6 @@ export const Reels = () => {
             return result;
         }
 
-        const isSame = (a,b) => {
-            return a === b;
-        };
-
         const findInArray = (array, item, index, result) => {
             let currentIndex = index;
             const matchItem = array[currentIndex].find((el) => el.name === item.name);
@@ -122,53 +122,26 @@ export const Reels = () => {
                 if (currentIndex <= result.length) {
                     findInArray(array, item, currentIndex, result)
                 }
-                
-                
             }
-            // array[currentIndex].
-            // for(let i = 0; i < array.length; i++){
-            //     if (isSame(item, array[i])){
-            //         result.push(array[i])
-            //     }
-            // }
+         
         }
 
         const checkWin = () => {
             const results = result();
             const winline: any[] = [];
             const itemsToCheck = results.splice(0,1).flat();
-       
-
             itemsToCheck.forEach((el) => {
-             //   console.log(el.name);
-                findInArray(results, el, 0, winline);
-            //     const
-
-
-
-            //    results.forEach((arr) => {
-            //        const winItem = arr.find((item) => el.name === item.name);
-                   
-            //         // console.log(arr)
-            //         // console.log("====")
-            //         if (winItem) {
-            //             console.log(winItem.name)
-            //             // winline.push(winItem)
-            //         }
-            //     })
+                const temp: any[] = [];
+                temp.push(el);
+                findInArray(results, el, 0, temp);
+                if (temp.length > 2) {
+                    winline.push(temp)
+                }
+                
+                
             });
-
-          console.log(winline)
-
-            // for (let i = 0; i < 3; i++) {
-            //     const currentItem = (results[0][i])
-
-            //     for (let j = 1; j < results.length; j++) {
-            //         findInArray(results[j], currentItem, winline)
-            //     }
-               
-            //     return checkWin();
-            // }
+           if(winline.length) setHasWinner(true);
+            //console.log(winline)
         }
 
         checkWin();
@@ -185,10 +158,42 @@ export const Reels = () => {
                 image={cardsImg[el.name]}
                 y={SYMBOL_HEIGHT * el.y}
                 key={el.id}
+                // tint={hasWinner ? 'black' : 0xFFFFFF}
                 />
        ) }
             </Container>
         )
+    }
+
+    const WinMsg = ({text}) => {
+
+        return(
+            <Text
+            text={text}
+            anchor={0.5}
+            x={360}
+            y={200}
+            style={
+              new TextStyle({
+                align: 'center',
+                fontFamily: '"Source Sans Pro", Helvetica, sans-serif',
+                fontSize: 50,
+                fill: ['#ffffff', '#ffd700'], // gradient
+                stroke: 'C97C5D',
+                strokeThickness: 5,
+                letterSpacing: 20,
+                dropShadow: true,
+                dropShadowColor: '8b6220',
+                dropShadowBlur: 4,
+                dropShadowAngle: Math.PI / 6,
+                dropShadowDistance: 6,
+                wordWrap: true,
+                wordWrapWidth: 440,
+              })
+            }
+          />
+        )
+       
     }
 
     const ReelsContainer = () => {
@@ -207,6 +212,7 @@ export const Reels = () => {
                 <>
                  {row.map((el, i) => 
                        <ReelContainer x={el.x} data={allReelData[i]} key={i}/> )}
+                 {hasWinner && <WinMsg text={winMsg}/>}
                 </>
                )
         } else return null
@@ -223,7 +229,7 @@ export const Reels = () => {
 
     return (
 
-        <Stage width={1024} height={638} options={{  backgroundAlpha: 0.6, }} onClick={click}>
+        <Stage width={1024} height={638} options={{  backgroundAlpha: 0.6 }} onClick={click}>
             <ReelsContainerWrapper />
         </Stage>
 
