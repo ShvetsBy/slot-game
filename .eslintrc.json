@@ -6,7 +6,8 @@
     "extends": [
         "airbnb", 
         "airbnb/hooks",
-       
+        "plugin:react/recommended",
+        "airbnb-typescript"
     ],
     "overrides": [],
     
@@ -21,6 +22,8 @@
         "react"
     ],
     "rules": {
-        "react/jsx-filename-extension":  "off"
+        "react/jsx-filename-extension":  "off",
+        "no-plusplus": [2, { "allowForLoopAfterthoughts": true }],
+        "import/prefer-default-export": "off"
       }
 }

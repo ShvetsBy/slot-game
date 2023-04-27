@@ -1,13 +1,11 @@
-import React from "react";
-import "./App.css";
-import { GameWrapper } from './components/gameWrapper/gameWrapper'
-import { Reels } from './components/reels/reels'
-import { ControlPanel } from './components/controlPanel/controlPanel'
-import { InfoBar } from "./components/infoBar/infoBar";
-//import { Spin } from "./components/controlPanel/spin";
+import React from 'react';
+import './App.css';
+import { GameWrapper } from './components/gameWrapper/gameWrapper';
+import { Reels } from './components/reels/reels';
+import { ControlPanel } from './components/controlPanel/controlPanel';
+import { InfoBar } from './components/infoBar/infoBar';
 
 function App() {
-
   return (
     <div className="App">
       <h1>Narcos</h1>
@@ -17,14 +15,12 @@ function App() {
         on this website. For real money betting, please refer to our licenced
         casino partners that are advertised.
       </p>
-      <GameWrapper >
+      <GameWrapper>
         <Reels />
         <div>
           <ControlPanel />
           <InfoBar />
         </div>
-    
-    
       </GameWrapper>
     </div>
   );

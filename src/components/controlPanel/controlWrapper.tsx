@@ -1,11 +1,10 @@
-import React, { FC, ReactNode } from 'react'
-import './controlPanel.css'
+import React, { ReactNode } from 'react';
+import './controlPanel.css';
 
 interface ControlsWrapperProps {
-    children: ReactNode;
-  }
+  children: ReactNode;
+}
 
-export const ControlsWrapper: FC<ControlsWrapperProps> = ({children}) => {
-    return <div className='wrapper'>{children}</div>
-
+export function ControlsWrapper({ children }: ControlsWrapperProps) {
+  return <div className="wrapper">{children}</div>;
 }

@@ -1,15 +1,15 @@
-import React, { FC } from "react";
+import React from 'react';
 
-interface dataDisplayProps {
-    title: string;
-    data: string;
-  }
+interface DataDisplayProps {
+  title: string;
+  data: string;
+}
 
-export const DataDisplay:FC<dataDisplayProps> = ({ title,data }) => {
-    return (
-        <div>
-            <p className="data-title">{title}</p>
-            <p className="data-value">{data}</p>
-        </div>
-    )
+export function DataDisplay({ title, data }: DataDisplayProps) {
+  return (
+    <div>
+      <p className="data-title">{title}</p>
+      <p className="data-value">{data}</p>
+    </div>
+  );
 }
