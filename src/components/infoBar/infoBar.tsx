@@ -1,5 +1,5 @@
-import React from 'react';
-import './infoBar.css';
+import React from 'react'
+import './infoBar.css'
 
 export function InfoBar() {
   return (
@@ -8,5 +8,5 @@ export function InfoBar() {
       <p> Bet: 200</p>
       <p> WIn: 1000</p>
     </div>
-  );
+  )
 }

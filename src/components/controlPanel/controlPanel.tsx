@@ -1,8 +1,8 @@
-import React from 'react';
-import { ControlsWrapper } from './controlWrapper';
-import { DataDisplay } from './dataDisplay';
-import { AdjustButtons } from './adjustButtons';
-import { Spin } from './spin';
+import React from 'react'
+import { ControlsWrapper } from './controlWrapper'
+import { DataDisplay } from './dataDisplay'
+import { AdjustButtons } from './adjustButtons'
+import { Spin } from './spin'
 
 export function ControlPanel() {
   return (
@@ -13,5 +13,5 @@ export function ControlPanel() {
       <AdjustButtons title="Coin Value" />
       <DataDisplay title="Coins" data="50000" />
     </ControlsWrapper>
-  );
+  )
 }

@@ -1,10 +1,14 @@
-import React, { ReactNode } from 'react';
-import './gameWrapper.css';
+import React, { ReactNode } from 'react'
+import './gameWrapper.css'
 
 interface GameWrapperProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 export function GameWrapper({ children }: GameWrapperProps) {
-  return <div className="game-wrapper" id="reels">{children}</div>;
+  return (
+    <div className="game-wrapper" id="reels">
+      {children}
+    </div>
+  )
 }
