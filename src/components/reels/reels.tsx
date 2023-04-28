@@ -17,10 +17,10 @@ import Girl from '../../assets/cards/girl-card.png'
 import WildCard from '../../assets/cards/wild-card.png'
 import WildFire from '../../assets/cards/wild-fire.png'
 import { WinMsg } from './winMsg'
+import { ReelContainer } from './reel'
+import { ReelSymbolType, CardsImgRecordType } from '../types/reelSymbol'
 
-type CardsImgRecord = { [key: string]: string } // переписать как посоветовал Влад
-
-const cardsImg: CardsImgRecord = {
+const cardsImg: CardsImgRecordType = {
   ACard,
   JCard,
   KCard,
@@ -41,15 +41,6 @@ export type ReelPosition = {
   x: number
 }
 
-export type ReelSymbol = {
-  [x: string]: any // убрать колхоз
-  id: string
-  name: string
-  value: string
-  img: string
-  y?: number
-}
-
 export function Reels() {
   const SYMBOL_WIDTH = 144
   const SYMBOL_HEIGHT = 196
@@ -61,7 +52,7 @@ export function Reels() {
   const [reelData, setReelData] = useState<any[]>(cardsData)
   const [allReelData, setAllReelData] = useState<any[]>([])
   const [hasWinner, setHasWinner] = useState(false)
-  const [winMsg, setWinMsg] = useState<string>('You win!!!')
+  const [winMsg] = useState<string>('You win!!!')
 
   const getShuffled = (arr: number[]) => {
     const shuffledArr = arr
@@ -77,7 +68,7 @@ export function Reels() {
     for (let i = 0; i < REELS_QUANTITY; i++) {
       const reelDataWithY = reelData.map((el) => ({ ...el }))
       const yPositions: Array<number> = getShuffled(generateYPos(reelData.length))
-      reelDataWithY.forEach((item: ReelSymbol, idx) => {
+      reelDataWithY.forEach((item: ReelSymbolType, idx) => {
         item.y = yPositions[idx]
       })
       setAllReelData((prev) => [...prev, reelDataWithY])
@@ -125,10 +116,10 @@ export function Reels() {
     }
 
     type FindInArrayType = (
-      array: Array<ReelSymbol>,
-      item: ReelSymbol,
+      array: Array<ReelSymbolType>,
+      item: ReelSymbolType,
       index: number,
-      result: ReelSymbol[]
+      result: ReelSymbolType[]
     ) => void
 
     const findInArray: FindInArrayType = (array, item, index, result) => {
@@ -163,18 +154,6 @@ export function Reels() {
     checkWin()
   }
 
-  function ReelContainer(props: { x: number; data: ReelSymbol[] }) {
-    const { x } = props
-    const { data } = props
-    return (
-      <Container width={SYMBOL_WIDTH} x={x}>
-        {data.map((el: ReelSymbol) => (
-          <Sprite image={cardsImg[el.name]} y={SYMBOL_HEIGHT * el.y!} key={el.id} />
-        ))}
-      </Container>
-    )
-  }
-
   function ReelsContainer() {
     const row: Array<ReelPosition> = []
     for (let i = 0; i < REELS_QUANTITY; i++) {
@@ -190,7 +169,14 @@ export function Reels() {
       return (
         <>
           {row.map((el, i) => (
-            <ReelContainer x={el.x} data={allReelData[i]} key={i} />
+            <ReelContainer
+              x={el.x}
+              height={SYMBOL_HEIGHT}
+              width={SYMBOL_WIDTH}
+              data={allReelData[i]}
+              images={cardsImg}
+              key={i}
+            />
           ))}
           {hasWinner && <WinMsg text={winMsg} />}
         </>
