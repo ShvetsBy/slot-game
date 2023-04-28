@@ -33,6 +33,7 @@
     font-family: 'Chango', cursive;
     color: wheat;
     margin: 0;
+    width: 64px
 }
 
 .adjust-button {
@@ -52,8 +53,12 @@
     left: 424px
    
 }
+
 .spin-wheel {
     width: 9rem;
-    height: 9rem;
-    
+    height: 9rem;  
+}
+
+.spin-wheel:hover {
+    cursor: pointer;
 }

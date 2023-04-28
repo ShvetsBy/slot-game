@@ -2,7 +2,7 @@ import React from 'react'
 
 interface DataDisplayProps {
   title: string
-  data: string
+  data: string | number
 }
 
 export function DataDisplay({ title, data }: DataDisplayProps) {
