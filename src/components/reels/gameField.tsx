@@ -16,10 +16,12 @@ import Jerk from '../../assets/cards/jerk-card.png'
 import Girl from '../../assets/cards/girl-card.png'
 import WildCard from '../../assets/cards/wild-card.png'
 import WildFire from '../../assets/cards/wild-fire.png'
-import { WinMsg } from './winMsg'
-import { ReelContainer } from './reel'
 import { ReelsContainer } from './reels'
-import { ReelSymbolType, CardsImgRecordType, ReelPositionType } from '../types/reelSymbol'
+import { ReelSymbolType, CardsImgRecordType } from '../types/reelSymbol'
+import { getShuffled } from '../../utils/getShuffled'
+import { generatePosition } from '../../utils/generatePosition'
+import { getRandom } from '../../utils/getRandom'
+import { checkWin } from '../../utils/checkWin'
 
 const cardsImg: CardsImgRecordType = {
   ACard,
@@ -51,21 +53,12 @@ export function GameField() {
   const [hasWinner, setHasWinner] = useState(false)
   const [winMsg] = useState<string>('You win!!!')
 
-  const getShuffled = (arr: number[]) => {
-    const shuffledArr = arr
-      .map((value) => ({ value, sort: Math.random() }))
-      .sort((a, b) => a.sort - b.sort)
-      .map(({ value }) => value)
-    return shuffledArr
-  }
-
-  const generateYPos = (number: number) => [...Array(number).keys()]
-
   useEffect(() => {
     for (let i = 0; i < REELS_QUANTITY; i++) {
       const reelDataWithY = reelData.map((el) => ({ ...el }))
-      const yPositions: Array<number> = getShuffled(generateYPos(reelData.length))
+      const yPositions: Array<number> = getShuffled(generatePosition(reelData.length))
       reelDataWithY.forEach((item: ReelSymbolType, idx) => {
+        // eslint-disable-next-line no-param-reassign
         item.y = yPositions[idx]
       })
       setAllReelData((prev) => [...prev, reelDataWithY])
@@ -84,12 +77,6 @@ export function GameField() {
     setReelData(reel)
   }
 
-  const getRandom = (min: number, max: number) => {
-    min = Math.ceil(min)
-    max = Math.floor(max)
-    return Math.floor(Math.random() * (max - min)) + min
-  }
-
   const spin = (position: number, times: number) => {
     for (let i = 0; i < times; i++) {
       reelRotation(position)
@@ -97,58 +84,11 @@ export function GameField() {
   }
 
   const click = () => {
-    spin(0, 100 + getRandom(1, 50))
-    spin(1, 200 + getRandom(1, 50))
-    spin(2, 300 + getRandom(1, 50))
-    spin(3, 400 + getRandom(1, 50))
-    spin(4, 500 + getRandom(1, 50))
-
-    const getResult = () => {
-      const result: ReelSymbol[] = []
-      for (let i = 0; i < allReelData.length; i++) {
-        const temp = allReelData[i].filter((item: ReelSymbol) => item.y! <= 2)
-        result.push(temp)
-      }
-      return result
+    for (let i = 0; i < REELS_QUANTITY; i++) {
+      spin(i, 100 + getRandom(1, 50))
     }
 
-    type FindInArrayType = (
-      array: Array<ReelSymbolType>,
-      item: ReelSymbolType,
-      index: number,
-      result: ReelSymbolType[]
-    ) => void
-
-    const findInArray: FindInArrayType = (array, item, index, result) => {
-      let currentIndex: number = index
-      const matchItem: ReelSymbol = array[currentIndex].find(
-        (el: ReelSymbol) => el.name === item.name
-      )
-      if (matchItem) {
-        result.push(matchItem)
-        currentIndex += 1
-        if (currentIndex <= result.length) {
-          findInArray(array, item, currentIndex, result)
-        }
-      }
-    }
-
-    const checkWin = () => {
-      const results: ReelSymbol[] = getResult()
-      const winline: any[] = []
-      const itemsToCheck = results.splice(0, 1).flat()
-      itemsToCheck.forEach((el) => {
-        const temp: any[] = []
-        temp.push(el)
-        findInArray(results, el, 0, temp)
-        if (temp.length > 2) {
-          winline.push(temp)
-        }
-      })
-      if (winline.length) setHasWinner(true)
-    }
-
-    checkWin()
+    checkWin(allReelData, setHasWinner)
   }
 
   return (

@@ -28,3 +28,10 @@ export interface ReelsContainerType extends Omit<ReelContainerType, 'x'> {
   hasWinner: boolean
   winMsg: string
 }
+
+export type FindInArrayType = (
+  array: Array<ReelSymbolType>,
+  item: ReelSymbolType,
+  index: number,
+  result: ReelSymbolType[]
+) => void
