@@ -13,8 +13,18 @@ export type CardsImgRecordType = {
 
 export type ReelContainerType = {
   x: number
-  data: ReelSymbolType[]
+  data: Array<ReelSymbolType>
   width: number
   height: number
   images: CardsImgRecordType
+}
+
+export type ReelPositionType = {
+  x: number
+}
+
+export interface ReelsContainerType extends Omit<ReelContainerType, 'x'> {
+  reelsNumber: number
+  hasWinner: boolean
+  winMsg: string
 }

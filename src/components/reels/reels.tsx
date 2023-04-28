@@ -1,200 +1,43 @@
-import React, { useEffect, useState } from 'react'
-import './reels.css'
-import { Stage, Container, Sprite } from '@pixi/react'
-import { cardsData } from '../../content/cards'
-import ACard from '../../assets/cards/a-card.png'
-import JCard from '../../assets/cards/j-card.png'
-import KCard from '../../assets/cards/k-card.png'
-import QCard from '../../assets/cards/q-card.png'
-import Flamingo from '../../assets/cards/flamingo-card.png'
-import Plane from '../../assets/cards/plane-card.png'
-import FreeSpins from '../../assets/cards/free-spins.png'
-import CatchMe from '../../assets/cards/catch-card.png'
-import Gun from '../../assets/cards/gun-card.png'
-import WalkieTalkie from '../../assets/cards/walkie-talkie.png'
-import Jerk from '../../assets/cards/jerk-card.png'
-import Girl from '../../assets/cards/girl-card.png'
-import WildCard from '../../assets/cards/wild-card.png'
-import WildFire from '../../assets/cards/wild-fire.png'
-import { WinMsg } from './winMsg'
+import React from 'react'
+import { ReelPositionType, ReelsContainerType } from '../types/reelSymbol'
 import { ReelContainer } from './reel'
-import { ReelSymbolType, CardsImgRecordType } from '../types/reelSymbol'
+import { WinMsg } from './winMsg'
 
-const cardsImg: CardsImgRecordType = {
-  ACard,
-  JCard,
-  KCard,
-  QCard,
-  Flamingo,
-  Plane,
-  FreeSpins,
-  CatchMe,
-  Gun,
-  WalkieTalkie,
-  WildCard,
-  WildFire,
-  Jerk,
-  Girl,
-}
-
-export type ReelPosition = {
-  x: number
-}
-
-export function Reels() {
-  const SYMBOL_WIDTH = 144
-  const SYMBOL_HEIGHT = 196
-  const REELS_QUANTITY = 5
-  const SYMBOLS_QUANTITY = 3
-  //   const SPIN_TIME = 100;
-
-  //   const [isRunning, setIsRunning] = useState(false);
-  const [reelData, setReelData] = useState<any[]>(cardsData)
-  const [allReelData, setAllReelData] = useState<any[]>([])
-  const [hasWinner, setHasWinner] = useState(false)
-  const [winMsg] = useState<string>('You win!!!')
-
-  const getShuffled = (arr: number[]) => {
-    const shuffledArr = arr
-      .map((value) => ({ value, sort: Math.random() }))
-      .sort((a, b) => a.sort - b.sort)
-      .map(({ value }) => value)
-    return shuffledArr
+export function ReelsContainer({
+  reelsNumber,
+  width,
+  height,
+  data,
+  images,
+  hasWinner,
+  winMsg,
+}: ReelsContainerType) {
+  const row: Array<ReelPositionType> = []
+  for (let i = 0; i < reelsNumber; i++) {
+    const reelPosition = i * width
+    const item: ReelPositionType = {
+      x: 0,
+    }
+    item.x = reelPosition
+    row.push(item)
   }
 
-  const generateYPos = (number: number) => [...Array(number).keys()]
-
-  useEffect(() => {
-    for (let i = 0; i < REELS_QUANTITY; i++) {
-      const reelDataWithY = reelData.map((el) => ({ ...el }))
-      const yPositions: Array<number> = getShuffled(generateYPos(reelData.length))
-      reelDataWithY.forEach((item: ReelSymbolType, idx) => {
-        item.y = yPositions[idx]
-      })
-      setAllReelData((prev) => [...prev, reelDataWithY])
-    }
-  }, [])
-
-  const reelRotation = (reelIndex: number) => {
-    const reel = [...allReelData[reelIndex]]
-    reel.forEach((e) => {
-      if (e.y < 13) {
-        e.y += 1
-      } else {
-        e.y = 0
-      }
-    })
-    setReelData(reel)
+  if (data.length) {
+    return (
+      <>
+        {row.map((el, i) => (
+          <ReelContainer
+            x={el.x}
+            height={height}
+            width={width}
+            data={data[i]}
+            images={images}
+            key={i}
+          />
+        ))}
+        {hasWinner && <WinMsg text={winMsg} />}
+      </>
+    )
   }
-
-  const getRandom = (min: number, max: number) => {
-    min = Math.ceil(min)
-    max = Math.floor(max)
-    return Math.floor(Math.random() * (max - min)) + min
-  }
-
-  const spin = (position: number, times: number) => {
-    for (let i = 0; i < times; i++) {
-      reelRotation(position)
-    }
-  }
-
-  const click = () => {
-    spin(0, 100 + getRandom(1, 50))
-    spin(1, 200 + getRandom(1, 50))
-    spin(2, 300 + getRandom(1, 50))
-    spin(3, 400 + getRandom(1, 50))
-    spin(4, 500 + getRandom(1, 50))
-
-    const getResult = () => {
-      const result: ReelSymbol[] = []
-      for (let i = 0; i < allReelData.length; i++) {
-        const temp = allReelData[i].filter((item: ReelSymbol) => item.y! <= 2)
-        result.push(temp)
-      }
-      return result
-    }
-
-    type FindInArrayType = (
-      array: Array<ReelSymbolType>,
-      item: ReelSymbolType,
-      index: number,
-      result: ReelSymbolType[]
-    ) => void
-
-    const findInArray: FindInArrayType = (array, item, index, result) => {
-      let currentIndex: number = index
-      const matchItem: ReelSymbol = array[currentIndex].find(
-        (el: ReelSymbol) => el.name === item.name
-      )
-      if (matchItem) {
-        result.push(matchItem)
-        currentIndex += 1
-        if (currentIndex <= result.length) {
-          findInArray(array, item, currentIndex, result)
-        }
-      }
-    }
-
-    const checkWin = () => {
-      const results: ReelSymbol[] = getResult()
-      const winline: any[] = []
-      const itemsToCheck = results.splice(0, 1).flat()
-      itemsToCheck.forEach((el) => {
-        const temp: any[] = []
-        temp.push(el)
-        findInArray(results, el, 0, temp)
-        if (temp.length > 2) {
-          winline.push(temp)
-        }
-      })
-      if (winline.length) setHasWinner(true)
-    }
-
-    checkWin()
-  }
-
-  function ReelsContainer() {
-    const row: Array<ReelPosition> = []
-    for (let i = 0; i < REELS_QUANTITY; i++) {
-      const reelPosition = i * SYMBOL_WIDTH
-      const item: ReelPosition = {
-        x: 0,
-      }
-      item.x = reelPosition
-      row.push(item)
-    }
-
-    if (allReelData.length) {
-      return (
-        <>
-          {row.map((el, i) => (
-            <ReelContainer
-              x={el.x}
-              height={SYMBOL_HEIGHT}
-              width={SYMBOL_WIDTH}
-              data={allReelData[i]}
-              images={cardsImg}
-              key={i}
-            />
-          ))}
-          {hasWinner && <WinMsg text={winMsg} />}
-        </>
-      )
-    }
-    return null
-  }
-
-  return (
-    <Stage width={1024} height={638} options={{ backgroundAlpha: 0.6 }} onClick={click}>
-      <Container
-        width={SYMBOL_WIDTH * REELS_QUANTITY}
-        height={SYMBOL_HEIGHT * SYMBOLS_QUANTITY}
-        x={152}
-        y={30}
-      >
-        <ReelsContainer />
-      </Container>
-    </Stage>
-  )
+  return null
 }
