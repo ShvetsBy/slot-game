@@ -5,12 +5,12 @@
 
 .wrapper{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     background-image: url('../../assets/img/firecamp-sparks.png');
     background-position: center;
     background-color:  rgba(0, 0, 0, .8);
     background-blend-mode: darken;
-    padding-top: 8px;
+    padding: 8px;
     padding-bottom: 12px;
     position: relative;
 }
@@ -33,7 +33,7 @@
     font-family: 'Chango', cursive;
     color: wheat;
     margin: 0;
-    width: 64px
+    width: 48px
 }
 
 .adjust-button {
@@ -49,14 +49,22 @@
 
 .spin-wheel-wrapper {
     position: absolute;
-    bottom: -36px;
-    left: 424px
+    bottom: 164px;
+    left: 400px
    
 }
 
 .spin-wheel {
-    width: 9rem;
-    height: 9rem;  
+    width: 8rem;
+    height: 8rem;  
+    position: absolute;
+    top: 56px;
+    left: 52px;
+}
+.spin-fire {
+    width: 15rem;
+    height: 15rem;  
+    position: absolute;
 }
 
 .spin-wheel:hover {
