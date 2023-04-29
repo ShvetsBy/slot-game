@@ -1,8 +1,12 @@
+import { SetStateAction } from 'react'
 import { ReelSymbolType } from '../components/types/reelSymbol'
 import { getResult } from './getResult'
 import { findInArray } from './findInArray'
 
-export const checkWin = (data, setHasWinner) => {
+export const checkWin = (
+  data: any[],
+  setHasWinner: { (value: SetStateAction<boolean>): void; (arg0: boolean): void }
+) => {
   const results: ReelSymbolType[] = getResult(data)
   const winline: any[] = []
   const itemsToCheck = results.splice(0, 1).flat()

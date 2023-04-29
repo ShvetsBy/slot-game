@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react'
 import { ReelPositionType, ReelsContainerType } from '../types/reelSymbol'
 import { ReelContainer } from './reel'
@@ -32,6 +33,7 @@ export function ReelsContainer({
             width={width}
             data={data[i]}
             images={images}
+            // eslint-disable-next-line react/no-array-index-key
             key={i}
           />
         ))}

@@ -1,6 +1,6 @@
 import { ReelSymbolType } from '../components/types/reelSymbol'
 
-export const getResult = (data) => {
+export const getResult = (data: any) => {
   const result: ReelSymbolType[] = []
   const visibleSymbols = 2
   for (let i = 0; i < data.length; i++) {
