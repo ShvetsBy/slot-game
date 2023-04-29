@@ -22,21 +22,26 @@ export function ControlPanel() {
 
   return (
     <ControlsWrapper>
-      <DataDisplay title="Bet" data={bet} />
-      <AdjustButtons
-        title="Level"
-        value={level}
-        decrease={() => setLevel(level - 1)}
-        increase={() => setLevel(level + 1)}
-      />
+      <div className="single-control">
+        <DataDisplay title="Bet" data={bet} />
+        <AdjustButtons
+          title="Level"
+          value={level}
+          decrease={() => setLevel(level - 1)}
+          increase={() => setLevel(level + 1)}
+        />
+      </div>
+
       <Spin />
-      <AdjustButtons
-        title="Coin Value"
-        increase={() => setCoinValue(coinValue * 2)}
-        decrease={() => setCoinValue(coinValue / 2)}
-        value={coinValue}
-      />
-      <DataDisplay title="Coins" data={coins} />
+      <div className="single-control">
+        <AdjustButtons
+          title="Coin Value"
+          increase={() => setCoinValue(coinValue * 2)}
+          decrease={() => setCoinValue(coinValue / 2)}
+          value={coinValue}
+        />
+        <DataDisplay title="Coins" data={coins} />
+      </div>
     </ControlsWrapper>
   )
 }

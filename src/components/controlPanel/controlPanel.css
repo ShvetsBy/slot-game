@@ -70,3 +70,9 @@
 .spin-wheel:hover {
     cursor: pointer;
 }
+
+.single-control{
+    display: flex;
+    gap: 3rem;
+    margin: 0 auto;
+}
