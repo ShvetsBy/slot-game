@@ -24,7 +24,7 @@ import { generatePosition } from '../../utils/generatePosition'
 import { getRandom } from '../../utils/getRandom'
 import { checkWin } from '../../utils/checkWin'
 import { useAppSelector, useAppDispatch } from '../state/hooks'
-import { setIsSpinning } from '../state/bettingSlice'
+import { incrementByAmount, setIsSpinning } from '../state/bettingSlice'
 
 const cardsImg: CardsImgRecordType = {
   ACard,
@@ -54,9 +54,10 @@ export function GameField() {
   const [reelData, setReelData] = useState<any[]>(cardsData)
   const [allReelData, setAllReelData] = useState<any[]>([])
   const [hasWinner, setHasWinner] = useState(false)
-  const [winMsg] = useState<string>('You win!!!')
+  const [winMsg, setWinMsg] = useState<string>('')
   const isSpinning = useAppSelector((state) => state.betting.isSpinning)
   const dispatch = useAppDispatch()
+  const betValue = useAppSelector((state) => state.betting.bet)
 
   useEffect(() => {
     for (let i = 0; i < REELS_QUANTITY; i++) {
@@ -89,11 +90,20 @@ export function GameField() {
   }
 
   if (isSpinning) {
+    setHasWinner(false)
     for (let i = 0; i < REELS_QUANTITY; i++) {
       spin(i, 100 + getRandom(1, 50))
     }
+    const roundResult = checkWin(allReelData)
 
-    checkWin(allReelData, setHasWinner)
+    if (roundResult.multiplier) {
+      let gain = betValue * roundResult.multiplier
+      dispatch(incrementByAmount(gain))
+      setWinMsg(`You win ${gain} coins`)
+      setHasWinner(roundResult.hasWinner)
+      gain = 0
+    }
+
     dispatch(setIsSpinning())
   }
 

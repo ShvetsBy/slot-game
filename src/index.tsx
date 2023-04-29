@@ -7,7 +7,6 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import store from './components/state'
 
-console.log(store)
 const root = ReactDOM.createRoot(document.getElementById('root')!)
 root.render(
   // <React.StrictMode>

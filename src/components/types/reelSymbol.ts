@@ -2,7 +2,7 @@ export type ReelSymbolType = {
   [x: string]: any // убрать колхоз
   id: string
   name: string
-  value: string
+  value: number
   img: string
   y?: number
 }

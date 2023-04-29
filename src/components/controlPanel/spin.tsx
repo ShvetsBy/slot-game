@@ -4,7 +4,7 @@ import React from 'react'
 import './controlPanel.css'
 import { gsap } from 'gsap'
 
-import { useAppDispatch, useAppSelector } from '../state/hooks'
+import { useAppDispatch } from '../state/hooks'
 import rawDrum from '../../assets/img/drum-noborder.png'
 import fireCircle from '../../assets/img/fire-rounded.png'
 import { setIsSpinning } from '../state/bettingSlice'
@@ -13,7 +13,7 @@ export function Spin() {
   const dispatch = useAppDispatch()
 
   const clickHandler = () => {
-    gsap.fromTo('#drum', { rotation: 0 }, { rotation: 360, repeat: 4, ease: 'none' })
+    gsap.fromTo('#drum', { rotation: 0 }, { rotation: 360, repeat: 1, ease: 'none' })
     dispatch(setIsSpinning())
   }
 

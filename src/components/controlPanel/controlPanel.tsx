@@ -3,21 +3,23 @@ import { ControlsWrapper } from './controlWrapper'
 import { DataDisplay } from './dataDisplay'
 import { AdjustButtons } from './adjustButtons'
 import { Spin } from './spin'
+import { useAppSelector } from '../state/hooks'
 
 export function ControlPanel() {
-  const BASIC_BET = 10
-  const BASIC_COINS_AMOUNT = 5000
-  const [bet, setBet] = useState(BASIC_BET)
+  // const BASIC_BET = 10
+  const betValue = useAppSelector((state) => state.betting.bet)
+  const coinsAmount = useAppSelector((state) => state.betting.totalCoins)
+  const [bet, setBet] = useState(betValue)
   const [level, setLevel] = useState(1)
   const [coinValue, setCoinValue] = useState(1)
-  const [coins, setCoins] = useState(BASIC_COINS_AMOUNT)
+  const [coins, setCoins] = useState(coinsAmount)
 
   useEffect(() => {
-    setBet(BASIC_BET * level)
+    setBet(betValue * level)
   }, [level])
 
   useEffect(() => {
-    setCoins(BASIC_COINS_AMOUNT / coinValue)
+    setCoins(coinsAmount / coinValue)
   }, [coinValue])
 
   return (
@@ -40,7 +42,7 @@ export function ControlPanel() {
           decrease={() => setCoinValue(coinValue / 2)}
           value={coinValue}
         />
-        <DataDisplay title="Coins" data={coins} />
+        <DataDisplay title="Coins" data={coinsAmount} />
       </div>
     </ControlsWrapper>
   )

@@ -1,12 +1,10 @@
-import { SetStateAction } from 'react'
 import { ReelSymbolType } from '../components/types/reelSymbol'
 import { getResult } from './getResult'
 import { findInArray } from './findInArray'
 
-export const checkWin = (
-  data: any[],
-  setHasWinner: { (value: SetStateAction<boolean>): void; (arg0: boolean): void }
-) => {
+export const checkWin = (data: any[]) => {
+  console.log(data)
+  let hasWinner = false
   const results: ReelSymbolType[] = getResult(data)
   const winline: any[] = []
   const itemsToCheck = results.splice(0, 1).flat()
@@ -18,5 +16,13 @@ export const checkWin = (
       winline.push(temp)
     }
   })
-  if (winline.length) setHasWinner(true)
+  if (winline.length) {
+    const cardValue = winline[0][0].value
+    const coincidence = winline.length
+    const multiplier = cardValue * coincidence
+    hasWinner = true
+    return { multiplier, hasWinner }
+    // setHasWinner(true)
+  }
+  return { hasWinner }
 }
