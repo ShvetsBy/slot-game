@@ -4,19 +4,17 @@ import React from 'react'
 import './controlPanel.css'
 import { gsap } from 'gsap'
 
-import { useSelector, useDispatch } from 'react-redux'
+import { useAppDispatch, useAppSelector } from '../state/hooks'
 import rawDrum from '../../assets/img/drum-noborder.png'
 import fireCircle from '../../assets/img/fire-rounded.png'
 import { setIsSpinning } from '../state/bettingSlice'
 
 export function Spin() {
-  const isSpinning = useSelector((state) => state.isRunning)
-  const dispatch = useDispatch()
-  console.log(isSpinning)
+  const dispatch = useAppDispatch()
 
   const clickHandler = () => {
     gsap.fromTo('#drum', { rotation: 0 }, { rotation: 360, repeat: 4, ease: 'none' })
-    dispatch(setIsSpinning)
+    dispatch(setIsSpinning())
   }
 
   document.addEventListener('keydown', (e) => {

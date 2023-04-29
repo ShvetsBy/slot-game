@@ -23,6 +23,8 @@ import { getShuffled } from '../../utils/getShuffled'
 import { generatePosition } from '../../utils/generatePosition'
 import { getRandom } from '../../utils/getRandom'
 import { checkWin } from '../../utils/checkWin'
+import { useAppSelector, useAppDispatch } from '../state/hooks'
+import { setIsSpinning } from '../state/bettingSlice'
 
 const cardsImg: CardsImgRecordType = {
   ACard,
@@ -53,6 +55,8 @@ export function GameField() {
   const [allReelData, setAllReelData] = useState<any[]>([])
   const [hasWinner, setHasWinner] = useState(false)
   const [winMsg] = useState<string>('You win!!!')
+  const isSpinning = useAppSelector((state) => state.betting.isSpinning)
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     for (let i = 0; i < REELS_QUANTITY; i++) {
@@ -84,16 +88,17 @@ export function GameField() {
     }
   }
 
-  const click = () => {
+  if (isSpinning) {
     for (let i = 0; i < REELS_QUANTITY; i++) {
       spin(i, 100 + getRandom(1, 50))
     }
 
     checkWin(allReelData, setHasWinner)
+    dispatch(setIsSpinning())
   }
 
   return (
-    <Stage width={1024} height={638} options={{ backgroundAlpha: 0.6 }} onClick={click}>
+    <Stage width={1024} height={638} options={{ backgroundAlpha: 0.6 }}>
       <Container
         width={SYMBOL_WIDTH * REELS_QUANTITY}
         height={SYMBOL_HEIGHT * SYMBOLS_QUANTITY}
