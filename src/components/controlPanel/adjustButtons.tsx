@@ -7,18 +7,37 @@ interface DataDisplayProps {
   value?: number
   increase?: any
   decrease?: any
+  disabledDecrease: boolean
+  disabledIncrease: boolean
 }
 
-export function AdjustButtons({ title, value, decrease, increase }: DataDisplayProps) {
+export function AdjustButtons({
+  title,
+  value,
+  decrease,
+  increase,
+  disabledDecrease,
+  disabledIncrease,
+}: DataDisplayProps) {
   return (
     <div>
       <p className="data-title">{title}</p>
       <div className="button-wrapper">
-        <button type="button" className="adjust-button" onClick={decrease}>
+        <button
+          type="button"
+          disabled={disabledDecrease}
+          className="adjust-button"
+          onClick={decrease}
+        >
           -
         </button>
         <p className="data-value">{value}</p>
-        <button type="button" className="adjust-button" onClick={increase}>
+        <button
+          type="button"
+          disabled={disabledIncrease}
+          className="adjust-button"
+          onClick={increase}
+        >
           +
         </button>
       </div>

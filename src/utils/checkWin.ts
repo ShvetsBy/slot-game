@@ -22,7 +22,6 @@ export const checkWin = (data: any[]) => {
     const multiplier = cardValue * coincidence
     hasWinner = true
     return { multiplier, hasWinner }
-    // setHasWinner(true)
   }
   return { hasWinner }
 }

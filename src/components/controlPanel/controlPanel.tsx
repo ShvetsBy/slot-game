@@ -3,34 +3,56 @@ import { ControlsWrapper } from './controlWrapper'
 import { DataDisplay } from './dataDisplay'
 import { AdjustButtons } from './adjustButtons'
 import { Spin } from './spin'
-import { useAppSelector } from '../state/hooks'
+import { useAppDispatch, useAppSelector } from '../state/hooks'
+import {
+  decrementCoinValue,
+  decrementLevel,
+  incrementCoinValue,
+  incrementLevel,
+} from '../state/bettingSlice'
 
 export function ControlPanel() {
-  // const BASIC_BET = 10
   const betValue = useAppSelector((state) => state.betting.bet)
+  const currentLevel = useAppSelector((state) => state.betting.level)
+  const currentCoinValue = useAppSelector((state) => state.betting.coinValue)
   const coinsAmount = useAppSelector((state) => state.betting.totalCoins)
-  const [bet, setBet] = useState(betValue)
-  const [level, setLevel] = useState(1)
-  const [coinValue, setCoinValue] = useState(1)
-  const [coins, setCoins] = useState(coinsAmount)
+  const [isLevelButtonDecreaseDisabled, setIsLevelButtonDereaseDisabled] = useState(false)
+  const [isLevelButtonIncreaseDisabled, setIsLevelButtonInreaseDisabled] = useState(false)
+  const [isLevelCoinDecreaseDisabled, setIsCoinButtonDereaseDisabled] = useState(false)
+  const [isLevelCoinIncreaseDisabled, setIsCoinButtonInreaseDisabled] = useState(false)
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    setBet(betValue * level)
-  }, [level])
+    if (currentLevel <= 0) {
+      setIsLevelButtonDereaseDisabled(true)
+    } else setIsLevelButtonDereaseDisabled(false)
+
+    if (currentLevel >= 10) {
+      setIsLevelButtonInreaseDisabled(true)
+    } else setIsLevelButtonInreaseDisabled(false)
+  }, [currentLevel])
 
   useEffect(() => {
-    setCoins(coinsAmount / coinValue)
-  }, [coinValue])
+    if (currentCoinValue <= 0.25) {
+      setIsCoinButtonDereaseDisabled(true)
+    } else setIsCoinButtonDereaseDisabled(false)
+
+    if (currentCoinValue >= 2) {
+      setIsCoinButtonInreaseDisabled(true)
+    } else setIsCoinButtonInreaseDisabled(false)
+  }, [currentCoinValue])
 
   return (
     <ControlsWrapper>
       <div className="single-control">
-        <DataDisplay title="Bet" data={bet} />
+        <DataDisplay title="Bet" data={betValue} />
         <AdjustButtons
           title="Level"
-          value={level}
-          decrease={() => setLevel(level - 1)}
-          increase={() => setLevel(level + 1)}
+          value={currentLevel}
+          decrease={() => dispatch(decrementLevel())}
+          increase={() => dispatch(incrementLevel())}
+          disabledDecrease={isLevelButtonDecreaseDisabled}
+          disabledIncrease={isLevelButtonIncreaseDisabled}
         />
       </div>
 
@@ -38,9 +60,11 @@ export function ControlPanel() {
       <div className="single-control">
         <AdjustButtons
           title="Coin Value"
-          increase={() => setCoinValue(coinValue * 2)}
-          decrease={() => setCoinValue(coinValue / 2)}
-          value={coinValue}
+          increase={() => dispatch(incrementCoinValue())}
+          decrease={() => dispatch(decrementCoinValue())}
+          value={currentCoinValue}
+          disabledDecrease={isLevelCoinDecreaseDisabled}
+          disabledIncrease={isLevelCoinIncreaseDisabled}
         />
         <DataDisplay title="Coins" data={coinsAmount} />
       </div>

@@ -24,7 +24,7 @@ import { generatePosition } from '../../utils/generatePosition'
 import { getRandom } from '../../utils/getRandom'
 import { checkWin } from '../../utils/checkWin'
 import { useAppSelector, useAppDispatch } from '../state/hooks'
-import { incrementByAmount, setIsSpinning } from '../state/bettingSlice'
+import { incrementByAmount, decrementByAmount, setIsSpinning } from '../state/bettingSlice'
 
 const cardsImg: CardsImgRecordType = {
   ACard,
@@ -91,11 +91,13 @@ export function GameField() {
 
   if (isSpinning) {
     setHasWinner(false)
+    console.log(betValue)
+    dispatch(decrementByAmount(betValue))
     for (let i = 0; i < REELS_QUANTITY; i++) {
       spin(i, 100 + getRandom(1, 50))
     }
     const roundResult = checkWin(allReelData)
-
+    console.log(roundResult.multiplier)
     if (roundResult.multiplier) {
       let gain = betValue * roundResult.multiplier
       dispatch(incrementByAmount(gain))
