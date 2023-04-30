@@ -48,9 +48,7 @@ export function GameField() {
   const SYMBOL_HEIGHT = 196
   const REELS_QUANTITY = 5
   const SYMBOLS_QUANTITY = 3
-  //   const SPIN_TIME = 100;
 
-  //   const [isRunning, setIsRunning] = useState(false);
   const [reelData, setReelData] = useState<any[]>(cardsData)
   const [allReelData, setAllReelData] = useState<any[]>([])
   const [hasWinner, setHasWinner] = useState(false)
@@ -89,25 +87,28 @@ export function GameField() {
     }
   }
 
-  if (isSpinning) {
-    setHasWinner(false)
-    console.log(betValue)
-    dispatch(decrementByAmount(betValue))
-    for (let i = 0; i < REELS_QUANTITY; i++) {
-      spin(i, 100 + getRandom(1, 50))
-    }
-    const roundResult = checkWin(allReelData)
-    console.log(roundResult.multiplier)
-    if (roundResult.multiplier) {
-      let gain = betValue * roundResult.multiplier
-      dispatch(incrementByAmount(gain))
-      setWinMsg(`You win ${gain} coins`)
-      setHasWinner(roundResult.hasWinner)
-      gain = 0
-    }
+  useEffect(() => {
+    if (isSpinning) {
+      setHasWinner(false)
+      console.log(betValue)
 
-    dispatch(setIsSpinning())
-  }
+      dispatch(decrementByAmount(betValue))
+
+      for (let i = 0; i < REELS_QUANTITY; i++) {
+        spin(i, 100 + getRandom(1, 50))
+      }
+      const roundResult = checkWin(allReelData)
+
+      if (roundResult.hasWinner) {
+        let gain = betValue * roundResult.multiplier!
+        dispatch(incrementByAmount(gain))
+        setWinMsg(`You win ${gain} coins`)
+        setHasWinner(roundResult.hasWinner)
+        gain = 0
+      }
+      dispatch(setIsSpinning())
+    }
+  }, [isSpinning])
 
   return (
     <Stage width={1024} height={638} options={{ backgroundAlpha: 0.6 }}>

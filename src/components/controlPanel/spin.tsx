@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React from 'react'
+import React, { useEffect } from 'react'
 import './controlPanel.css'
 import { gsap } from 'gsap'
 
@@ -17,11 +17,13 @@ export function Spin() {
     dispatch(setIsSpinning())
   }
 
-  document.addEventListener('keydown', (e) => {
-    if (e.code === 'Space') {
-      clickHandler()
-    }
-  })
+  useEffect(() => {
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        clickHandler()
+      }
+    })
+  }, [])
 
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events
