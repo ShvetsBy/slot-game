@@ -3,6 +3,7 @@ import { constants } from '../../content/constants'
 
 type BettingState = {
   totalCoins: number
+  displayCoins: number
   bet: number
   level: number
   coinValue: number
@@ -15,6 +16,7 @@ const initialState: BettingState = {
   coinValue: constants.START_COIN_VALUE,
   isSpinning: false,
   level: constants.START_LEVEL,
+  displayCoins: constants.BASIC_COINS_AMOUNT,
 }
 
 const bettingSlice = createSlice({
@@ -30,23 +32,23 @@ const bettingSlice = createSlice({
     setIsSpinning: (state) => {
       state.isSpinning = !state.isSpinning
     },
-    decrementBet: (state, action: PayloadAction<number>) => {
-      state.bet -= action.payload
-    },
-    incrementBet: (state, action: PayloadAction<number>) => {
-      state.bet += action.payload
-    },
     decrementLevel: (state) => {
       state.level -= 1
+      state.bet = constants.BASIC_BET * state.level
     },
     incrementLevel: (state) => {
       state.level += 1
+      state.bet = constants.BASIC_BET * state.level
     },
     decrementCoinValue: (state) => {
       state.coinValue /= 2
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      state.displayCoins = state.totalCoins / state.coinValue
     },
     incrementCoinValue: (state) => {
       state.coinValue *= 2
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      state.displayCoins = state.totalCoins / state.coinValue
     },
   },
 })
@@ -55,8 +57,6 @@ export const {
   incrementByAmount,
   decrementByAmount,
   setIsSpinning,
-  decrementBet,
-  incrementBet,
   decrementLevel,
   incrementLevel,
   decrementCoinValue,

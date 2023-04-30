@@ -15,7 +15,7 @@ export function ControlPanel() {
   const betValue = useAppSelector((state) => state.betting.bet)
   const currentLevel = useAppSelector((state) => state.betting.level)
   const currentCoinValue = useAppSelector((state) => state.betting.coinValue)
-  const coinsAmount = useAppSelector((state) => state.betting.totalCoins)
+  const coinsAmount = useAppSelector((state) => state.betting.displayCoins)
   const [isLevelButtonDecreaseDisabled, setIsLevelButtonDereaseDisabled] = useState(false)
   const [isLevelButtonIncreaseDisabled, setIsLevelButtonInreaseDisabled] = useState(false)
   const [isLevelCoinDecreaseDisabled, setIsCoinButtonDereaseDisabled] = useState(false)
@@ -23,7 +23,7 @@ export function ControlPanel() {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    if (currentLevel <= 0) {
+    if (currentLevel <= 1) {
       setIsLevelButtonDereaseDisabled(true)
     } else setIsLevelButtonDereaseDisabled(false)
 
