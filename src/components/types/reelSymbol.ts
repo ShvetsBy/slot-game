@@ -5,6 +5,7 @@ export type ReelSymbolType = {
   value: number
   img: string
   y?: number
+  win: false
 }
 
 export type CardsImgRecordType = {
@@ -17,6 +18,7 @@ export type ReelContainerType = {
   width: number
   height: number
   images: CardsImgRecordType
+  tint: string
 }
 
 export type ReelPositionType = {

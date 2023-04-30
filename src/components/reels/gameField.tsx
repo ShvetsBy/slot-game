@@ -54,6 +54,7 @@ export function GameField() {
   const [allReelData, setAllReelData] = useState<any[]>([])
   const [hasWinner, setHasWinner] = useState(false)
   const [winMsg, setWinMsg] = useState<string>('')
+  const [tint, setTint] = useState<string>('white')
 
   const isSpinning = useAppSelector((state) => state.betting.isSpinning)
   const dispatch = useAppDispatch()
@@ -99,12 +100,30 @@ export function GameField() {
         spin(i, 100 + getRandom(1, 50))
       }
       const roundResult = checkWin(allReelData)
-
+      const resetReelsData = [...allReelData]
+      resetReelsData.forEach((el) =>
+        el.forEach((item: { win: boolean }) => {
+          item.win = false
+        })
+      )
+      setTint('white')
+      setAllReelData((prev) => [...prev, resetReelsData])
       if (roundResult.hasWinner) {
         let gain = betValue * roundResult.multiplier!
         dispatch(incrementByAmount(gain))
         setWinMsg(`You win ${gain} coins`)
         setHasWinner(roundResult.hasWinner)
+        roundResult.winline?.forEach((el, i) => {
+          const winReelsData = [...allReelData]
+          winReelsData[i].forEach((item: { y: any; win: boolean }) => {
+            if (item.y === el.y) {
+              item.win = true
+            }
+          })
+          setTint('black')
+          setAllReelData((prev) => [...prev, winReelsData])
+        })
+
         gain = 0
       }
       dispatch(setIsSpinning())
@@ -141,6 +160,7 @@ export function GameField() {
           width={SYMBOL_WIDTH}
           height={SYMBOL_HEIGHT}
           images={cardsImg}
+          tint={tint}
         />
       </Container>
     </Stage>

@@ -12,6 +12,7 @@ export function ReelsContainer({
   images,
   hasWinner,
   winMsg,
+  tint
 }: ReelsContainerType) {
   const row: Array<ReelPositionType> = []
   for (let i = 0; i < reelsNumber; i++) {
@@ -35,6 +36,7 @@ export function ReelsContainer({
             images={images}
             // eslint-disable-next-line react/no-array-index-key
             key={i}
+            tint={tint}
           />
         ))}
         {hasWinner && <WinMsg text={winMsg} />}
