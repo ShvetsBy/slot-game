@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import './reels.css'
 import { Stage, Container } from '@pixi/react'
+import { gsap, Power1 } from 'gsap'
 import { cardsData } from '../../content/cards'
 import ACard from '../../assets/cards/a-card.png'
 import JCard from '../../assets/cards/j-card.png'
@@ -53,10 +54,12 @@ export function GameField() {
   const [allReelData, setAllReelData] = useState<any[]>([])
   const [hasWinner, setHasWinner] = useState(false)
   const [winMsg, setWinMsg] = useState<string>('')
+
   const isSpinning = useAppSelector((state) => state.betting.isSpinning)
   const dispatch = useAppDispatch()
   const betValue = useAppSelector((state) => state.betting.bet)
-
+  const coinsAmount = useAppSelector((state) => state.betting.totalCoins)
+  const [prevCoinsAmount, setPrevCoinsAmount] = useState<number>(coinsAmount)
   useEffect(() => {
     for (let i = 0; i < REELS_QUANTITY; i++) {
       const reelDataWithY = reelData.map((el) => ({ ...el }))
@@ -90,8 +93,6 @@ export function GameField() {
   useEffect(() => {
     if (isSpinning) {
       setHasWinner(false)
-      console.log(betValue)
-
       dispatch(decrementByAmount(betValue))
 
       for (let i = 0; i < REELS_QUANTITY; i++) {
@@ -109,6 +110,20 @@ export function GameField() {
       dispatch(setIsSpinning())
     }
   }, [isSpinning])
+
+  useEffect(() => {
+    const displays = document.querySelectorAll('.data-value')
+    const coinDisplay = displays[displays.length - 1]
+
+    gsap.from(coinDisplay, {
+      textContent: prevCoinsAmount,
+      duration: 0.5,
+      ease: Power1.easeIn,
+      snap: { textContent: 1 },
+      stagger: 1,
+    })
+    setPrevCoinsAmount(coinsAmount)
+  }, [coinsAmount])
 
   return (
     <Stage width={1024} height={638} options={{ backgroundAlpha: 0.6 }}>

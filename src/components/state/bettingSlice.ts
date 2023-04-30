@@ -24,7 +24,6 @@ const bettingSlice = createSlice({
   initialState,
   reducers: {
     decrementByAmount: (state, action: PayloadAction<number>) => {
-      console.log(action.payload)
       state.totalCoins -= action.payload
     },
     incrementByAmount: (state, action: PayloadAction<number>) => {

@@ -42,6 +42,16 @@ export function ControlPanel() {
     } else setIsCoinButtonInreaseDisabled(false)
   }, [currentCoinValue])
 
+  const handleLevelIncrement = () => {
+    console.log('fuck')
+    dispatch(incrementLevel())
+  }
+
+  const handleLevelDecrement = () => {
+    console.log('fuck 1')
+    dispatch(decrementLevel())
+  }
+
   return (
     <ControlsWrapper>
       <div className="single-control">
@@ -49,8 +59,8 @@ export function ControlPanel() {
         <AdjustButtons
           title="Level"
           value={currentLevel}
-          decrease={() => dispatch(decrementLevel())}
-          increase={() => dispatch(incrementLevel())}
+          decrease={handleLevelDecrement}
+          increase={handleLevelIncrement}
           disabledDecrease={isLevelButtonDecreaseDisabled}
           disabledIncrease={isLevelButtonIncreaseDisabled}
         />
