@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import './reels.css'
-import { Stage, Container, useTick } from '@pixi/react'
+import { Stage, Container, useTick, useApp } from '@pixi/react'
 import { gsap, Power1 } from 'gsap'
 import { cardsData } from '../../content/cards'
 import ACard from '../../assets/cards/a-card.png'
@@ -61,6 +61,10 @@ export function GameField() {
   const betValue = useAppSelector((state) => state.betting.bet)
   const coinsAmount = useAppSelector((state) => state.betting.totalCoins)
   const [prevCoinsAmount, setPrevCoinsAmount] = useState<number>(coinsAmount)
+  // const app = useApp()
+  // useTick((delta) => {
+  //   console.log(delta)
+  // })
   useEffect(() => {
     for (let i = 0; i < REELS_QUANTITY; i++) {
       const reelDataWithY = reelData.map((el) => ({ ...el }))
@@ -91,10 +95,6 @@ export function GameField() {
     }
   }
 
-  // useTick((delta) => {
-  //   console.log(delta)
-  // })
-
   useEffect(() => {
     if (isSpinning) {
       setHasWinner(false)
@@ -110,8 +110,9 @@ export function GameField() {
           item.win = false
         })
       )
-      setTint('white')
       setAllReelData((prev) => [...prev, resetReelsData])
+      setTint('white')
+
       if (roundResult.hasWinner) {
         let gain = betValue * roundResult.multiplier!
         dispatch(incrementByAmount(gain))

@@ -1,8 +1,11 @@
 /* eslint-disable prettier/prettier */
 import React from 'react'
+import { useTick } from '@pixi/react'
 import { ReelPositionType, ReelsContainerType } from '../types/reelSymbol'
 import { ReelContainer } from './reel'
 import { WinMsg } from './winMsg'
+import { useAppSelector } from '../state/hooks'
+
 
 export function ReelsContainer({
   reelsNumber,
@@ -12,8 +15,10 @@ export function ReelsContainer({
   images,
   hasWinner,
   winMsg,
-  tint
+  tint,
 }: ReelsContainerType) {
+  
+//  useTick(delta => console.log(delta) )
   const row: Array<ReelPositionType> = []
   for (let i = 0; i < reelsNumber; i++) {
     const reelPosition = i * width
@@ -45,3 +50,4 @@ export function ReelsContainer({
   }
   return null
 }
+
