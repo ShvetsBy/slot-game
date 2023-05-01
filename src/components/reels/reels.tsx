@@ -16,6 +16,7 @@ export function ReelsContainer({
   hasWinner,
   winMsg,
   tint,
+  isSpinning
 }: ReelsContainerType) {
   
 //  useTick(delta => console.log(delta) )
@@ -42,6 +43,7 @@ export function ReelsContainer({
             // eslint-disable-next-line react/no-array-index-key
             key={i}
             tint={tint}
+            isSpinning={isSpinning}
           />
         ))}
         {hasWinner && <WinMsg text={winMsg} />}

@@ -19,6 +19,7 @@ export type ReelContainerType = {
   height: number
   images: CardsImgRecordType
   tint: string
+  isSpinning: boolean
 }
 
 export type ReelPositionType = {

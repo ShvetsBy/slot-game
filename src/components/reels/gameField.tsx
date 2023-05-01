@@ -97,41 +97,43 @@ export function GameField() {
 
   useEffect(() => {
     if (isSpinning) {
-      setHasWinner(false)
-      dispatch(decrementByAmount(betValue))
+      // setHasWinner(false)
+      // dispatch(decrementByAmount(betValue))
 
-      for (let i = 0; i < REELS_QUANTITY; i++) {
-        spin(i, 100 + getRandom(1, 50))
-      }
-      const roundResult = checkWin(allReelData)
-      const resetReelsData = [...allReelData]
-      resetReelsData.forEach((el) =>
-        el.forEach((item: { win: boolean }) => {
-          item.win = false
-        })
-      )
-      setAllReelData((prev) => [...prev, resetReelsData])
-      setTint('white')
+      // for (let i = 0; i < REELS_QUANTITY; i++) {
+      //   spin(i, 100 + getRandom(1, 50))
+      // }
+      // const roundResult = checkWin(allReelData)
+      // const resetReelsData = [...allReelData]
+      // resetReelsData.forEach((el) =>
+      //   el.forEach((item: { win: boolean }) => {
+      //     item.win = false
+      //   })
+      // )
+      // setAllReelData((prev) => [...prev, resetReelsData])
+      // setTint('white')
 
-      if (roundResult.hasWinner) {
-        let gain = betValue * roundResult.multiplier!
-        dispatch(incrementByAmount(gain))
-        setWinMsg(`You win ${gain} coins`)
-        setHasWinner(roundResult.hasWinner)
-        roundResult.winline?.forEach((el, i) => {
-          const winReelsData = [...allReelData]
-          winReelsData[i].forEach((item: { y: any; win: boolean }) => {
-            if (item.y === el.y) {
-              item.win = true
-            }
-          })
-          setTint('#330000')
-          setAllReelData((prev) => [...prev, winReelsData])
-        })
+      // if (roundResult.hasWinner) {
+      //   let gain = betValue * roundResult.multiplier!
+      //   dispatch(incrementByAmount(gain))
+      //   setWinMsg(`You win ${gain} coins`)
+      //   setHasWinner(roundResult.hasWinner)
+      //   roundResult.winline?.forEach((el, i) => {
+      //     const winReelsData = [...allReelData]
+      //     winReelsData[i].forEach((item: { y: any; win: boolean }) => {
+      //       if (item.y === el.y) {
+      //         item.win = true
+      //       }
+      //     })
+      //     setTint('#330000')
+      //     setAllReelData((prev) => [...prev, winReelsData])
+      //   })
 
-        gain = 0
-      }
-      dispatch(setIsSpinning())
+      //   gain = 0
+      // }
+      setTimeout(() => {
+        dispatch(setIsSpinning())
+      }, 3000)
     }
   }, [isSpinning])
 
@@ -166,6 +168,7 @@ export function GameField() {
           height={SYMBOL_HEIGHT}
           images={cardsImg}
           tint={tint}
+          isSpinning={isSpinning}
         />
       </Container>
     </Stage>
