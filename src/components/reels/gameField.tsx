@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import './reels.css'
-import { Stage, Container } from '@pixi/react'
+import { Stage, Container, useTick } from '@pixi/react'
 import { gsap, Power1 } from 'gsap'
 import { cardsData } from '../../content/cards'
 import ACard from '../../assets/cards/a-card.png'
@@ -91,6 +91,10 @@ export function GameField() {
     }
   }
 
+  // useTick((delta) => {
+  //   console.log(delta)
+  // })
+
   useEffect(() => {
     if (isSpinning) {
       setHasWinner(false)
@@ -120,7 +124,7 @@ export function GameField() {
               item.win = true
             }
           })
-          setTint('black')
+          setTint('#330000')
           setAllReelData((prev) => [...prev, winReelsData])
         })
 

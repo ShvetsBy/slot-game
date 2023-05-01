@@ -1,5 +1,6 @@
 import React from 'react'
 import './App.css'
+
 import { GameWrapper } from './components/gameWrapper/gameWrapper'
 import { GameField } from './components/reels/gameField'
 import { ControlPanel } from './components/controlPanel/controlPanel'
