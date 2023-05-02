@@ -3,19 +3,15 @@ import { getResult } from './getResult'
 import { findInArray } from './findInArray'
 
 export const checkWin = (data: any[], matrix: any) => {
-  // console.log(data)
   let hasWinner = false
   const results: ReelSymbolType[] = getResult(data, matrix)
   let winline: any[] = []
-
-  // const itemsToCheck = results.splice(0, 1).flat()
   const itemsToCheck = [...results]
-  console.log(itemsToCheck)
-  itemsToCheck.forEach((el) => {
+  itemsToCheck[0].forEach((el: ReelSymbolType) => {
     const temp: any[] = []
-    console.log(el)
+
     temp.push(el)
-    findInArray(results, el, 0, temp)
+    findInArray(results, el, 1, temp)
     if (temp.length > 2) {
       winline = [...temp]
     }
@@ -25,7 +21,6 @@ export const checkWin = (data: any[], matrix: any) => {
     const coincidence = winline.length
     const multiplier = cardValue * coincidence
     hasWinner = true
-    console.log(hasWinner)
     return { multiplier, hasWinner, winline }
   }
   return { hasWinner }
