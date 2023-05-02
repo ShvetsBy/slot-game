@@ -20,6 +20,12 @@ export function Spin() {
   useEffect(() => {
     document.addEventListener('keydown', (e) => {
       if (e.code === 'Space') {
+        const buttons: Element[] = Array.from(document.getElementsByClassName('adjust-button'))
+        for (let i = 0; i < buttons.length; i++) {
+          const button = buttons[i] as HTMLButtonElement
+          button.blur()
+        }
+
         clickHandler()
       }
     })
