@@ -18,7 +18,7 @@ export function ReelsContainer({
   isSpinning
 }: ReelsContainerType) {
   
-//  useTick(delta => console.log(delta) )
+
   const row: Array<ReelPositionType> = []
   for (let i = 0; i < reelsNumber; i++) {
     const reelPosition = i * width

@@ -56,7 +56,7 @@ export function GameField() {
   const [tint, setTint] = useState<string>('white')
 
   const isSpinning = useAppSelector((state) => state.betting.isSpinning)
-
+  const yPos = useAppSelector((state) => state.betting.drawResult)
   const dispatch = useAppDispatch()
   const betValue = useAppSelector((state) => state.betting.bet)
   const coinsAmount = useAppSelector((state) => state.betting.totalCoins)
@@ -112,6 +112,31 @@ export function GameField() {
       }, 3000)
     }
   }, [isSpinning])
+
+  useEffect(() => {
+    if (yPos.length === 5 && !isSpinning) {
+      const roundResult = checkWin(allReelData, yPos)
+      if (roundResult.hasWinner) {
+        let gain = betValue * roundResult.multiplier!
+        dispatch(incrementByAmount(gain))
+        setWinMsg(`You win ${gain} coins`)
+        setHasWinner(roundResult.hasWinner)
+        roundResult.winline?.forEach((el, i) => {
+          const winReelsData = [...allReelData]
+          winReelsData[i].forEach((item: { y: any; win: boolean }) => {
+            if (item.y === el.y) {
+              item.win = true
+            }
+          })
+          setTint('#330000')
+          setAllReelData((prev) => [...prev, winReelsData])
+        })
+
+        gain = 0
+      }
+      // console.log(yPos)
+    }
+  }, [yPos, isSpinning])
 
   useEffect(() => {
     const displays = document.querySelectorAll('.data-value')

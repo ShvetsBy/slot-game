@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Container, Sprite, useTick } from '@pixi/react'
 import { BlurFilter } from 'pixi.js'
+import { flushSync } from 'react-dom'
 import { ReelSymbolType, ReelContainerType } from '../types/reelSymbol'
 import { getShuffled } from '../../utils/getShuffled'
 import { generatePosition } from '../../utils/generatePosition'
@@ -30,10 +31,19 @@ export function ReelContainer({
     if (isSpinning) {
       blurFilter.blurY = 6
       const temp: Array<number> = getShuffled(generatePosition(data.length))
-      setYPositions(temp)
+      flushSync(() => {
+        setYPositions(temp)
+      })
     }
   })
-  dispatch(setDrawResult(yPositions))
+
+  useEffect(() => {
+    if (!isSpinning) {
+      dispatch(setDrawResult(yPositions))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSpinning])
+
   return (
     <Container width={width} x={x}>
       {data.map((el: ReelSymbolType) => (

@@ -43,12 +43,10 @@ export function ControlPanel() {
   }, [currentCoinValue])
 
   const handleLevelIncrement = () => {
-    console.log('fuck')
     dispatch(incrementLevel())
   }
 
   const handleLevelDecrement = () => {
-    console.log('fuck 1')
     dispatch(decrementLevel())
   }
 
