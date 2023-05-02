@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { Container, Sprite, useTick } from '@pixi/react'
 import { BlurFilter } from 'pixi.js'
 import { ReelSymbolType, ReelContainerType } from '../types/reelSymbol'
-import { useAppSelector } from '../state/hooks'
 import { getShuffled } from '../../utils/getShuffled'
 import { generatePosition } from '../../utils/generatePosition'
+import { useAppSelector, useAppDispatch } from '../state/hooks'
+import { setDrawResult } from '../state/bettingSlice'
 
 export function ReelContainer({
   x,
@@ -16,7 +17,7 @@ export function ReelContainer({
   isSpinning,
 }: ReelContainerType) {
   const blurFilter = new BlurFilter(0)
-
+  const dispatch = useAppDispatch()
   const [yPositions, setYPositions] = useState<number[]>([])
 
   useEffect(() => {
@@ -31,13 +32,13 @@ export function ReelContainer({
       setYPositions(temp)
     }
   })
-
+  dispatch(setDrawResult(yPositions))
   return (
     <Container width={width} x={x}>
-      {data.map((el: ReelSymbolType, i) => (
+      {data.map((el: ReelSymbolType) => (
         <Sprite
           image={images[el.name]}
-          y={height * yPositions[i]}
+          y={height * yPositions[el.y!]}
           tint={el.win ? 'white' : tint}
           filters={[blurFilter]}
           key={el.id}

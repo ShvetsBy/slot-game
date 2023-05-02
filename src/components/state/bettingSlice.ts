@@ -8,6 +8,7 @@ type BettingState = {
   level: number
   coinValue: number
   isSpinning: boolean
+  drawResult: number[][]
 }
 
 const initialState: BettingState = {
@@ -17,6 +18,7 @@ const initialState: BettingState = {
   isSpinning: false,
   level: constants.START_LEVEL,
   displayCoins: constants.BASIC_COINS_AMOUNT,
+  drawResult: [],
 }
 
 const bettingSlice = createSlice({
@@ -50,6 +52,12 @@ const bettingSlice = createSlice({
 
       // state.displayCoins = state.totalCoins / state.coinValue
     },
+    setDrawResult: (state, action: PayloadAction<number[]>) => {
+      state.drawResult.push(action.payload)
+      if (state.drawResult.length === 6) {
+        state.drawResult.splice(0, 1)
+      }
+    },
   },
 })
 
@@ -61,6 +69,7 @@ export const {
   incrementLevel,
   decrementCoinValue,
   incrementCoinValue,
+  setDrawResult,
 } = bettingSlice.actions
 
 export default bettingSlice.reducer

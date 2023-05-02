@@ -5,7 +5,7 @@ export type ReelSymbolType = {
   value: number
   img: string
   y?: number
-  win: false
+  win?: false
 }
 
 export type CardsImgRecordType = {

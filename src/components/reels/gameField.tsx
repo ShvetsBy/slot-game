@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import './reels.css'
-import { Stage, Container, useTick, useApp } from '@pixi/react'
 import { gsap, Power1 } from 'gsap'
+import { Stage, Container } from '@pixi/react'
+import { Provider } from 'react-redux'
 import { cardsData } from '../../content/cards'
 import ACard from '../../assets/cards/a-card.png'
 import JCard from '../../assets/cards/j-card.png'
@@ -19,13 +20,12 @@ import Girl from '../../assets/cards/girl-card.png'
 import WildCard from '../../assets/cards/wild-card.png'
 import WildFire from '../../assets/cards/wild-fire.png'
 import { ReelsContainer } from './reels'
-import { ReelSymbolType, CardsImgRecordType } from '../types/reelSymbol'
-import { getShuffled } from '../../utils/getShuffled'
-import { generatePosition } from '../../utils/generatePosition'
-import { getRandom } from '../../utils/getRandom'
+import { CardsImgRecordType, ReelSymbolType } from '../types/reelSymbol'
 import { checkWin } from '../../utils/checkWin'
 import { useAppSelector, useAppDispatch } from '../state/hooks'
 import { incrementByAmount, decrementByAmount, setIsSpinning } from '../state/bettingSlice'
+import { generatePosition } from '../../utils/generatePosition'
+import store from '../state'
 
 const cardsImg: CardsImgRecordType = {
   ACard,
@@ -50,25 +50,22 @@ export function GameField() {
   const REELS_QUANTITY = 5
   const SYMBOLS_QUANTITY = 3
 
-  const [reelData, setReelData] = useState<any[]>(cardsData)
   const [allReelData, setAllReelData] = useState<any[]>([])
   const [hasWinner, setHasWinner] = useState(false)
   const [winMsg, setWinMsg] = useState<string>('')
   const [tint, setTint] = useState<string>('white')
 
   const isSpinning = useAppSelector((state) => state.betting.isSpinning)
+
   const dispatch = useAppDispatch()
   const betValue = useAppSelector((state) => state.betting.bet)
   const coinsAmount = useAppSelector((state) => state.betting.totalCoins)
   const [prevCoinsAmount, setPrevCoinsAmount] = useState<number>(coinsAmount)
-  // const app = useApp()
-  // useTick((delta) => {
-  //   console.log(delta)
-  // })
+
   useEffect(() => {
     for (let i = 0; i < REELS_QUANTITY; i++) {
-      const reelDataWithY = reelData.map((el) => ({ ...el }))
-      const yPositions: Array<number> = getShuffled(generatePosition(reelData.length))
+      const reelDataWithY = cardsData.map((el) => ({ ...el }))
+      const yPositions: Array<number> = generatePosition(cardsData.length)
       reelDataWithY.forEach((item: ReelSymbolType, idx) => {
         // eslint-disable-next-line no-param-reassign
         item.y = yPositions[idx]
@@ -77,32 +74,11 @@ export function GameField() {
     }
   }, [])
 
-  const reelRotation = (reelIndex: number) => {
-    const reel = [...allReelData[reelIndex]]
-    reel.forEach((e) => {
-      if (e.y < 13) {
-        e.y += 1
-      } else {
-        e.y = 0
-      }
-    })
-    setReelData(reel)
-  }
-
-  const spin = (position: number, times: number) => {
-    for (let i = 0; i < times; i++) {
-      reelRotation(position)
-    }
-  }
-
   useEffect(() => {
     if (isSpinning) {
-      // setHasWinner(false)
-      // dispatch(decrementByAmount(betValue))
+      setHasWinner(false)
+      dispatch(decrementByAmount(betValue))
 
-      // for (let i = 0; i < REELS_QUANTITY; i++) {
-      //   spin(i, 100 + getRandom(1, 50))
-      // }
       // const roundResult = checkWin(allReelData)
       // const resetReelsData = [...allReelData]
       // resetReelsData.forEach((el) =>
@@ -111,23 +87,23 @@ export function GameField() {
       //   })
       // )
       // setAllReelData((prev) => [...prev, resetReelsData])
-      // setTint('white')
+      setTint('white')
 
       // if (roundResult.hasWinner) {
       //   let gain = betValue * roundResult.multiplier!
       //   dispatch(incrementByAmount(gain))
       //   setWinMsg(`You win ${gain} coins`)
-      //   setHasWinner(roundResult.hasWinner)
-      //   roundResult.winline?.forEach((el, i) => {
-      //     const winReelsData = [...allReelData]
-      //     winReelsData[i].forEach((item: { y: any; win: boolean }) => {
-      //       if (item.y === el.y) {
-      //         item.win = true
-      //       }
-      //     })
-      //     setTint('#330000')
-      //     setAllReelData((prev) => [...prev, winReelsData])
-      //   })
+      //   // setHasWinner(roundResult.hasWinner)
+      //   // roundResult.winline?.forEach((el, i) => {
+      //   //   const winReelsData = [...allReelData]
+      //   //   winReelsData[i].forEach((item: { y: any; win: boolean }) => {
+      //   //     if (item.y === el.y) {
+      //   //       item.win = true
+      //   //     }
+      //   //   })
+      //   //   setTint('#330000')
+      //   //   setAllReelData((prev) => [...prev, winReelsData])
+      //   // })
 
       //   gain = 0
       // }
@@ -153,24 +129,26 @@ export function GameField() {
 
   return (
     <Stage width={1024} height={638} options={{ backgroundAlpha: 0.6 }}>
-      <Container
-        width={SYMBOL_WIDTH * REELS_QUANTITY}
-        height={SYMBOL_HEIGHT * SYMBOLS_QUANTITY}
-        x={152}
-        y={30}
-      >
-        <ReelsContainer
-          reelsNumber={REELS_QUANTITY}
-          hasWinner={hasWinner}
-          winMsg={winMsg}
-          data={allReelData}
-          width={SYMBOL_WIDTH}
-          height={SYMBOL_HEIGHT}
-          images={cardsImg}
-          tint={tint}
-          isSpinning={isSpinning}
-        />
-      </Container>
+      <Provider store={store}>
+        <Container
+          width={SYMBOL_WIDTH * REELS_QUANTITY}
+          height={SYMBOL_HEIGHT * SYMBOLS_QUANTITY}
+          x={152}
+          y={30}
+        >
+          <ReelsContainer
+            reelsNumber={REELS_QUANTITY}
+            hasWinner={hasWinner}
+            winMsg={winMsg}
+            data={allReelData}
+            width={SYMBOL_WIDTH}
+            height={SYMBOL_HEIGHT}
+            images={cardsImg}
+            tint={tint}
+            isSpinning={isSpinning}
+          />
+        </Container>
+      </Provider>
     </Stage>
   )
 }

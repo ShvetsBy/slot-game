@@ -2,18 +2,13 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { Provider } from 'react-redux'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import store from './components/state'
 
 const root = ReactDOM.createRoot(document.getElementById('root')!)
 root.render(
   // <React.StrictMode>
-  <Provider store={store}>
-    <App />
-  </Provider>
-
+  <App />
   // </React.StrictMode>
 )
 

@@ -13,7 +13,7 @@ export function Spin() {
   const dispatch = useAppDispatch()
 
   const clickHandler = () => {
-    gsap.fromTo('#drum', { rotation: 0 }, { rotation: 360, repeat: 1, ease: 'none' })
+    gsap.fromTo('#drum', { rotation: 0 }, { rotation: 360, repeat: 3, ease: 'none' })
     dispatch(setIsSpinning())
   }
 
