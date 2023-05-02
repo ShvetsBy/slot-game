@@ -26,10 +26,11 @@ export type ReelPositionType = {
   x: number
 }
 
-export interface ReelsContainerType extends Omit<ReelContainerType, 'x'> {
+export interface ReelsContainerType extends Omit<ReelContainerType, 'x' | 'data'> {
   reelsNumber: number
   hasWinner: boolean
   winMsg: string
+  data: ReelSymbolType[][]
 }
 
 export type FindInArrayType = (

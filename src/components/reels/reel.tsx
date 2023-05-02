@@ -4,7 +4,7 @@ import { BlurFilter } from 'pixi.js'
 import { ReelSymbolType, ReelContainerType } from '../types/reelSymbol'
 import { getShuffled } from '../../utils/getShuffled'
 import { generatePosition } from '../../utils/generatePosition'
-import { useAppSelector, useAppDispatch } from '../state/hooks'
+import { useAppDispatch } from '../state/hooks'
 import { setDrawResult } from '../state/bettingSlice'
 
 export function ReelContainer({
@@ -23,6 +23,7 @@ export function ReelContainer({
   useEffect(() => {
     const temp: Array<number> = getShuffled(generatePosition(data.length))
     setYPositions(temp)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useTick(() => {

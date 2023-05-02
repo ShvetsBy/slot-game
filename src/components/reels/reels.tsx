@@ -1,10 +1,9 @@
 /* eslint-disable prettier/prettier */
 import React from 'react'
-import { useTick } from '@pixi/react'
 import { ReelPositionType, ReelsContainerType } from '../types/reelSymbol'
 import { ReelContainer } from './reel'
 import { WinMsg } from './winMsg'
-import { useAppSelector } from '../state/hooks'
+
 
 
 export function ReelsContainer({

@@ -1,7 +1,7 @@
-/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useEffect } from 'react'
 import './controlPanel.css'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { gsap } from 'gsap'
 
 import { useAppDispatch } from '../state/hooks'
@@ -23,6 +23,7 @@ export function Spin() {
         clickHandler()
       }
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
