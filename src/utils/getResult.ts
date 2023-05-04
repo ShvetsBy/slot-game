@@ -14,16 +14,11 @@ export const getResult = (data: any, matrix: any[][]) => {
     elements.push(thirdEl)
     els.push(elements)
   }
-  // console.log(els)
 
   for (let i = 0; i < data.length; i++) {
-    // console.log({ i })
-    // console.log(els[i])
     const temp = data[i].filter((item: ReelSymbolType) => els[i].includes(item.y!))
-    // console.log(temp)
-    // result.push(temp)
     result = [...result, temp]
   }
-  // console.log(result)
+
   return result
 }

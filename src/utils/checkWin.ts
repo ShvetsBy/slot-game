@@ -17,7 +17,6 @@ export const checkWin = (data: any[], matrix: any) => {
     }
   })
   if (winline.length) {
-    // console.log(winline)
     const cardValue = winline[0].value
     const coincidence = winline.length
     const multiplier = cardValue * coincidence
