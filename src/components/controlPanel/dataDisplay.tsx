@@ -1,5 +1,3 @@
-import React from 'react'
-
 interface DataDisplayProps {
   title: string
   data: string | number

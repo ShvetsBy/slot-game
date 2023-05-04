@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import './controlPanel.css'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { gsap } from 'gsap'

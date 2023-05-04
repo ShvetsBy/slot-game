@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { ControlsWrapper } from './controlWrapper'
 import { DataDisplay } from './dataDisplay'
 import { AdjustButtons } from './adjustButtons'

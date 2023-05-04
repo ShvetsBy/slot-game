@@ -1,5 +1,4 @@
 /* eslint-disable react/require-default-props */
-import React from 'react'
 import './controlPanel.css'
 
 interface DataDisplayProps {
