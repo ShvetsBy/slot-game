@@ -27,6 +27,8 @@ import { incrementByAmount, decrementByAmount, setIsSpinning } from '../state/be
 import { generatePosition } from '../../utils/generatePosition'
 import store from '../state'
 
+import { constants } from '../../content/constants'
+
 const cardsImg: CardsImgRecordType = {
   ACard,
   JCard,
@@ -45,11 +47,6 @@ const cardsImg: CardsImgRecordType = {
 }
 
 export function GameField() {
-  const SYMBOL_WIDTH = 144
-  const SYMBOL_HEIGHT = 196
-  const REELS_QUANTITY = 5
-  const SYMBOLS_QUANTITY = 3
-
   const [allReelData, setAllReelData] = useState<any[]>([])
   const [hasWinner, setHasWinner] = useState(false)
   const [winMsg, setWinMsg] = useState<string>('')
@@ -63,7 +60,7 @@ export function GameField() {
   const [prevCoinsAmount, setPrevCoinsAmount] = useState<number>(coinsAmount)
 
   useEffect(() => {
-    for (let i = 0; i < REELS_QUANTITY; i++) {
+    for (let i = 0; i < constants.REELS_QUANTITY; i++) {
       const reelDataWithY = cardsData.map((el) => ({ ...el }))
       const yPositions: Array<number> = generatePosition(cardsData.length)
       reelDataWithY.forEach((item: ReelSymbolType, idx) => {
@@ -123,32 +120,22 @@ export function GameField() {
     setPrevCoinsAmount(coinsAmount)
   }, [coinsAmount])
 
-  //   const resetReelsData = [...allReelData]
-  //   resetReelsData.forEach((el) =>
-  //     el.forEach((item: ReelSymbolType) => {
-  //       if (item.win) {
-  //         item.win = false
-  //       }
-  //     })
-  //   )
-  //   setAllReelData((prev) => [...prev, resetReelsData])
-
   return (
     <Stage width={1024} height={638} options={{ backgroundAlpha: 0.6 }}>
       <Provider store={store}>
         <Container
-          width={SYMBOL_WIDTH * REELS_QUANTITY}
-          height={SYMBOL_HEIGHT * SYMBOLS_QUANTITY}
+          width={constants.SYMBOL_WIDTH * constants.REELS_QUANTITY}
+          height={constants.SYMBOL_HEIGHT * constants.SYMBOLS_QUANTITY}
           x={152}
           y={30}
         >
           <ReelsContainer
-            reelsNumber={REELS_QUANTITY}
+            reelsNumber={constants.REELS_QUANTITY}
             hasWinner={hasWinner}
             winMsg={winMsg}
             data={allReelData}
-            width={SYMBOL_WIDTH}
-            height={SYMBOL_HEIGHT}
+            width={constants.SYMBOL_WIDTH}
+            height={constants.SYMBOL_HEIGHT}
             images={cardsImg}
             tint={tint}
             isSpinning={isSpinning}
