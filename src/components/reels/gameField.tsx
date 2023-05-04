@@ -47,7 +47,7 @@ const cardsImg: CardsImgRecordType = {
 }
 
 export function GameField() {
-  const [allReelData, setAllReelData] = useState<any[]>([])
+  const [allReelData, setAllReelData] = useState<ReelSymbolType[][]>([])
   const [hasWinner, setHasWinner] = useState(false)
   const [winMsg, setWinMsg] = useState<string>('')
   const [tint, setTint] = useState<string>('white')
@@ -92,7 +92,7 @@ export function GameField() {
         setHasWinner(roundResult.hasWinner)
         roundResult.winline?.forEach((el, i) => {
           const winReelsData = [...allReelData]
-          winReelsData[i].forEach((item: { y: number; win: boolean }) => {
+          winReelsData[i].forEach((item: ReelSymbolType) => {
             if (item.y === el.y) {
               item.win = true
             }

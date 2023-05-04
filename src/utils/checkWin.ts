@@ -2,11 +2,12 @@ import { ReelSymbolType } from '../components/types/reelSymbol'
 import { getResult } from './getResult'
 import { findInArray } from './findInArray'
 
-export const checkWin = (data: any[], matrix: any) => {
+export const checkWin = (data: ReelSymbolType[][], matrix: number[][]) => {
   let hasWinner = false
-  const results: ReelSymbolType[] = getResult(data, matrix)
+  const results = getResult(data, matrix)
   let winline: ReelSymbolType[] = []
   const itemsToCheck = [...results]
+
   itemsToCheck[0].forEach((el: ReelSymbolType) => {
     const temp: ReelSymbolType[] = []
 

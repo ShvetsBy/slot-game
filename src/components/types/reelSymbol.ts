@@ -1,11 +1,10 @@
 export type ReelSymbolType = {
-  [x: string]: any // убрать колхоз
   id: string
   name: string
   value: number
   img: string
   y?: number
-  win?: false
+  win?: boolean
 }
 
 export type CardsImgRecordType = {
@@ -34,7 +33,7 @@ export interface ReelsContainerType extends Omit<ReelContainerType, 'x' | 'data'
 }
 
 export type FindInArrayType = (
-  array: Array<ReelSymbolType>,
+  array: ReelSymbolType[][],
   item: ReelSymbolType,
   index: number,
   result: ReelSymbolType[]

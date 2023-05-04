@@ -1,8 +1,8 @@
 import { ReelSymbolType } from '../components/types/reelSymbol'
 
-export const getResult = (data: any, matrix: any[][]) => {
-  let result: ReelSymbolType[] = []
-  const els: any[] = []
+export const getResult = (data: ReelSymbolType[][], matrix: number[][]) => {
+  let result: ReelSymbolType[][] = []
+  const els: number[][] = []
 
   for (let i = 0; i < matrix.length; i++) {
     const elements = []

@@ -2,7 +2,8 @@ import { FindInArrayType, ReelSymbolType } from '../components/types/reelSymbol'
 
 export const findInArray: FindInArrayType = (array, item, index, result) => {
   let currentIndex: number = index
-  const matchItem: ReelSymbolType = array[currentIndex].find(
+
+  const matchItem: ReelSymbolType | undefined = array[currentIndex].find(
     (el: ReelSymbolType) => el.name === item.name
   )
 
