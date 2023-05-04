@@ -4,8 +4,6 @@ import { ReelPositionType, ReelsContainerType } from '../types/reelSymbol'
 import { ReelContainer } from './reel'
 import { WinMsg } from './winMsg'
 
-
-
 export function ReelsContainer({
   reelsNumber,
   width,
@@ -18,7 +16,6 @@ export function ReelsContainer({
   isSpinning
 }: ReelsContainerType) {
   
-
   const row: Array<ReelPositionType> = []
   for (let i = 0; i < reelsNumber; i++) {
     const reelPosition = i * width

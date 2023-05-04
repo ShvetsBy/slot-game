@@ -11,7 +11,7 @@ import store from './components/state'
 function App() {
   return (
     <Provider store={store}>
-      <div className="App">
+      <div className="app">
         <h1>Narcos</h1>
         <h2 className="sub-heading">The slot game</h2>
         <p className="legal-notice">

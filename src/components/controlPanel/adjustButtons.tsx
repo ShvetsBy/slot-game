@@ -5,8 +5,8 @@ import './controlPanel.css'
 interface DataDisplayProps {
   title: string | number
   value?: number
-  increase?: any
-  decrease?: any
+  increase?: () => void
+  decrease?: () => void
   disabledDecrease: boolean
   disabledIncrease: boolean
 }

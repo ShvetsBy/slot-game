@@ -78,35 +78,7 @@ export function GameField() {
     if (isSpinning) {
       setHasWinner(false)
       dispatch(decrementByAmount(betValue))
-
-      // const roundResult = checkWin(allReelData)
-      // const resetReelsData = [...allReelData]
-      // resetReelsData.forEach((el) =>
-      //   el.forEach((item: { win: boolean }) => {
-      //     item.win = false
-      //   })
-      // )
-      // setAllReelData((prev) => [...prev, resetReelsData])
       setTint('white')
-
-      // if (roundResult.hasWinner) {
-      //   let gain = betValue * roundResult.multiplier!
-      //   dispatch(incrementByAmount(gain))
-      //   setWinMsg(`You win ${gain} coins`)
-      //   // setHasWinner(roundResult.hasWinner)
-      //   // roundResult.winline?.forEach((el, i) => {
-      //   //   const winReelsData = [...allReelData]
-      //   //   winReelsData[i].forEach((item: { y: any; win: boolean }) => {
-      //   //     if (item.y === el.y) {
-      //   //       item.win = true
-      //   //     }
-      //   //   })
-      //   //   setTint('#330000')
-      //   //   setAllReelData((prev) => [...prev, winReelsData])
-      //   // })
-
-      //   gain = 0
-      // }
       setTimeout(() => {
         dispatch(setIsSpinning())
       }, 3000)
@@ -123,18 +95,17 @@ export function GameField() {
         setHasWinner(roundResult.hasWinner)
         roundResult.winline?.forEach((el, i) => {
           const winReelsData = [...allReelData]
-          winReelsData[i].forEach((item: { y: any; win: boolean }) => {
+          winReelsData[i].forEach((item: { y: number; win: boolean }) => {
             if (item.y === el.y) {
               item.win = true
             }
           })
           setTint('#330000')
-          setAllReelData((prev) => [...prev, winReelsData])
+          setAllReelData(winReelsData)
         })
 
         gain = 0
       }
-      // console.log(yPos)
     }
   }, [yPos, isSpinning])
 
@@ -151,6 +122,16 @@ export function GameField() {
     })
     setPrevCoinsAmount(coinsAmount)
   }, [coinsAmount])
+
+  //   const resetReelsData = [...allReelData]
+  //   resetReelsData.forEach((el) =>
+  //     el.forEach((item: ReelSymbolType) => {
+  //       if (item.win) {
+  //         item.win = false
+  //       }
+  //     })
+  //   )
+  //   setAllReelData((prev) => [...prev, resetReelsData])
 
   return (
     <Stage width={1024} height={638} options={{ backgroundAlpha: 0.6 }}>

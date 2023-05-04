@@ -1,4 +1,4 @@
-.infoBar-wrapper{
+.infobar-wrapper{
     background-color:rgba(0, 0, 0, .9);
     display: flex;
     align-items: center;
@@ -6,7 +6,7 @@
     gap: 2rem;
 }
 
-.infoBar-wrapper p {
+.infobar-wrapper p {
     font-family: 'Proza Libre', sans-serif;
     color: wheat;
 }
