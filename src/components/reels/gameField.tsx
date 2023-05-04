@@ -129,7 +129,7 @@ export function GameField() {
             reelsNumber={constants.REELS_QUANTITY}
             hasWinner={hasWinner}
             winMsg={winMsg}
-            data={allReelData}
+            symbolsData={allReelData}
             width={constants.SYMBOL_WIDTH}
             height={constants.SYMBOL_HEIGHT}
             images={cardsImg}

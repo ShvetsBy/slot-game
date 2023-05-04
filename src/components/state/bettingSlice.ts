@@ -44,13 +44,9 @@ const bettingSlice = createSlice({
     },
     decrementCoinValue: (state) => {
       state.coinValue /= 2
-
-      // state.displayCoins = state.totalCoins / state.coinValue
     },
     incrementCoinValue: (state) => {
       state.coinValue *= 2
-
-      // state.displayCoins = state.totalCoins / state.coinValue
     },
     setDrawResult: (state, action: PayloadAction<number[]>) => {
       state.drawResult.push(action.payload)

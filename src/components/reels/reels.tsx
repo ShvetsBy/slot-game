@@ -7,7 +7,7 @@ export function ReelsContainer({
   reelsNumber,
   width,
   height,
-  data,
+  symbolsData,
   images,
   hasWinner,
   winMsg,
@@ -18,16 +18,15 @@ export function ReelsContainer({
 
   useEffect(() => {
     for (let i = 0; i < reelsNumber; i++) {
-      const reelPosition = i * width
       const item: ReelPositionType = {
-        x: reelPosition,
+        x: i * width,
       }
       setRow((prev) => [...prev, item])
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  if (data.length) {
+  if (symbolsData.length) {
     return (
       <>
         {row.map((el, i) => (
@@ -35,7 +34,7 @@ export function ReelsContainer({
             x={el.x}
             height={height}
             width={width}
-            data={data[i]}
+            symbolsData={symbolsData[i]}
             images={images}
             // eslint-disable-next-line react/no-array-index-key
             key={i}

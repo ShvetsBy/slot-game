@@ -16,7 +16,7 @@ export const getResult = (data: ReelSymbolType[][], matrix: number[][]) => {
   }
 
   for (let i = 0; i < data.length; i++) {
-    const temp = data[i].filter((item: ReelSymbolType) => els[i].includes(item.y!))
+    const temp = data[i].filter((item: ReelSymbolType) => els[i].includes(item.y))
     result = [...result, temp]
   }
 

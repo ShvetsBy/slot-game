@@ -3,7 +3,7 @@ export type ReelSymbolType = {
   name: string
   value: number
   img: string
-  y?: number
+  y: number
   win?: boolean
 }
 
@@ -13,7 +13,7 @@ export type CardsImgRecordType = {
 
 export type ReelContainerType = {
   x: number
-  data: Array<ReelSymbolType>
+  symbolsData: Array<ReelSymbolType>
   width: number
   height: number
   images: CardsImgRecordType
@@ -25,11 +25,11 @@ export type ReelPositionType = {
   x: number
 }
 
-export interface ReelsContainerType extends Omit<ReelContainerType, 'x' | 'data'> {
+export interface ReelsContainerType extends Omit<ReelContainerType, 'x' | 'symbolsData'> {
   reelsNumber: number
   hasWinner: boolean
   winMsg: string
-  data: ReelSymbolType[][]
+  symbolsData: ReelSymbolType[][]
 }
 
 export type FindInArrayType = (

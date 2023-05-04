@@ -12,7 +12,7 @@ export function ReelContainer({
   x,
   width,
   height,
-  data,
+  symbolsData,
   images,
   tint,
   isSpinning,
@@ -22,7 +22,7 @@ export function ReelContainer({
   const [yPositions, setYPositions] = useState<number[]>([])
 
   useEffect(() => {
-    const temp: Array<number> = getShuffled(generatePosition(data.length))
+    const temp: Array<number> = getShuffled(generatePosition(symbolsData.length))
     setYPositions(temp)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -30,7 +30,7 @@ export function ReelContainer({
   useTick(() => {
     if (isSpinning) {
       blurFilter.blurY = 6
-      const temp: Array<number> = getShuffled(generatePosition(data.length))
+      const temp: Array<number> = getShuffled(generatePosition(symbolsData.length))
       flushSync(() => {
         setYPositions(temp)
       })
@@ -46,10 +46,10 @@ export function ReelContainer({
 
   return (
     <Container width={width} x={x}>
-      {data.map((el: ReelSymbolType) => (
+      {symbolsData.map((el: ReelSymbolType) => (
         <Sprite
           image={images[el.name]}
-          y={height * yPositions[el.y!]}
+          y={height * yPositions[el.y]}
           tint={el.win ? 'white' : tint}
           filters={[blurFilter]}
           key={el.id}
