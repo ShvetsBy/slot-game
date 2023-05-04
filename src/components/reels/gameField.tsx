@@ -61,12 +61,8 @@ export function GameField() {
 
   useEffect(() => {
     for (let i = 0; i < constants.REELS_QUANTITY; i++) {
-      const reelDataWithY = cardsData.map((el) => ({ ...el }))
       const yPositions: Array<number> = generatePosition(cardsData.length)
-      reelDataWithY.forEach((item: ReelSymbolType, idx) => {
-        // eslint-disable-next-line no-param-reassign
-        item.y = yPositions[idx]
-      })
+      const reelDataWithY = cardsData.map((el, idx) => ({ ...el, y: yPositions[idx] }))
       setAllReelData((prev) => [...prev, reelDataWithY])
     }
   }, [])
