@@ -1,4 +1,4 @@
-import { FindInArrayType, ReelSymbolType } from '../components/types/reelSymbol'
+import { FindInArrayType, ReelSymbolType } from '../components/types/types'
 
 export const findInArray: FindInArrayType = (array, item, index, result) => {
   let currentIndex: number = index

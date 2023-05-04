@@ -1,4 +1,4 @@
-import { ReelSymbolType } from '../components/types/reelSymbol'
+import { ReelSymbolType } from '../components/types/types'
 import { getResult } from './getResult'
 import { findInArray } from './findInArray'
 

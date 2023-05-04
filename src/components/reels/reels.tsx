@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ReelPositionType, ReelsContainerType } from '../types/reelSymbol'
+import { ReelPositionType, ReelsContainerType } from '../types/types'
 import { ReelContainer } from './reel'
 import { WinMsg } from './winMsg'
 

@@ -20,7 +20,7 @@ import Girl from '../../assets/cards/girl-card.png'
 import WildCard from '../../assets/cards/wild-card.png'
 import WildFire from '../../assets/cards/wild-fire.png'
 import { ReelsContainer } from './reels'
-import { CardsImgRecordType, ReelSymbolType } from '../types/reelSymbol'
+import { ReelSymbolType } from '../types/types'
 import { checkWin } from '../../utils/checkWin'
 import { useAppSelector, useAppDispatch } from '../state/hooks'
 import { incrementByAmount, decrementByAmount, setIsSpinning } from '../state/bettingSlice'
@@ -29,7 +29,23 @@ import store from '../state'
 
 import { constants } from '../../content/constants'
 
-const cardsImg: CardsImgRecordType = {
+export type CardImg =
+  | 'ACard'
+  | 'JCard'
+  | 'KCard'
+  | 'QCard'
+  | 'Flamingo'
+  | 'Plane'
+  | 'FreeSpins'
+  | 'CatchMe'
+  | 'Gun'
+  | 'WalkieTalkie'
+  | 'WildCard'
+  | 'WildFire'
+  | 'Jerk'
+  | 'Girl'
+
+const cardsImg: Record<CardImg, string> = {
   ACard,
   JCard,
   KCard,

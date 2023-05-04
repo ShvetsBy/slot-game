@@ -1,4 +1,4 @@
-import { ReelSymbolType } from '../components/types/reelSymbol'
+import { ReelSymbolType } from '../components/types/types'
 
 export const getResult = (data: ReelSymbolType[][], matrix: number[][]) => {
   let result: ReelSymbolType[][] = []
