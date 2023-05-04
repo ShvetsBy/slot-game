@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Container, Sprite, useTick } from '@pixi/react'
 import { BlurFilter } from 'pixi.js'
 import { flushSync } from 'react-dom'

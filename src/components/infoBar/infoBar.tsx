@@ -1,4 +1,3 @@
-import React from 'react'
 import './infoBar.css'
 import { useAppSelector } from '../state/hooks'
 

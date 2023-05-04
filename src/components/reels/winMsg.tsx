@@ -1,4 +1,3 @@
-import React from 'react'
 import { Text } from '@pixi/react'
 import { TextStyle } from 'pixi.js'
 

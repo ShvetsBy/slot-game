@@ -1,8 +1,5 @@
-import React from 'react'
 import './App.css'
-
 import { Provider } from 'react-redux'
-
 import { GameField } from './components/reels/gameField'
 import { ControlPanel } from './components/controlPanel/controlPanel'
 import { InfoBar } from './components/infoBar/infoBar'

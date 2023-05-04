@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-import React from 'react'
 import { ReelPositionType, ReelsContainerType } from '../types/reelSymbol'
 import { ReelContainer } from './reel'
 import { WinMsg } from './winMsg'
@@ -13,9 +11,8 @@ export function ReelsContainer({
   hasWinner,
   winMsg,
   tint,
-  isSpinning
+  isSpinning,
 }: ReelsContainerType) {
-  
   const row: Array<ReelPositionType> = []
   for (let i = 0; i < reelsNumber; i++) {
     const reelPosition = i * width
@@ -48,4 +45,3 @@ export function ReelsContainer({
   }
   return null
 }
-

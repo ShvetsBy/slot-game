@@ -25,6 +25,8 @@
     ],
     "rules": {
         "react/jsx-filename-extension":  "off",
+        "react/jsx-uses-react": "off",
+        "react/react-in-jsx-scope": "off",
         "no-plusplus": [2, { "allowForLoopAfterthoughts": true }],
         "import/prefer-default-export": "off",
         "no-param-reassign": 0,

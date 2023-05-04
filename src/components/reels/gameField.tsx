@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './reels.css'
 import { gsap, Power1 } from 'gsap'
 import { Stage, Container } from '@pixi/react'
