@@ -67,6 +67,7 @@ export function GameField() {
   const [hasWinner, setHasWinner] = useState(false)
   const [winMsg, setWinMsg] = useState<string>('')
   const [tint, setTint] = useState<string>('white')
+  // const [resetField, setResetField] = useState(false)
 
   const isSpinning = useAppSelector((state) => state.betting.isSpinning)
   const yPos = useAppSelector((state) => state.betting.drawResult)
@@ -86,6 +87,7 @@ export function GameField() {
   useEffect(() => {
     if (isSpinning) {
       setHasWinner(false)
+      // setResetField(true)
       dispatch(decrementByAmount(betValue))
       setTint('white')
       setTimeout(() => {
@@ -131,6 +133,13 @@ export function GameField() {
     })
     setPrevCoinsAmount(coinsAmount)
   }, [coinsAmount])
+
+  // useEffect(() => {
+  //   const reelsToReset = [...allReelData]
+  //   reelsToReset.forEach((item) => item.map((el) => (el.win = false)))
+  //   console.log(reelsToReset)
+  //   // setAllReelData(()))
+  // }, [resetField])
 
   return (
     <Stage width={1024} height={638} options={{ backgroundAlpha: 0.6 }}>

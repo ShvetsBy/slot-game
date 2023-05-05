@@ -35,6 +35,5 @@ export interface ReelsContainerType extends Omit<ReelContainerType, 'x' | 'symbo
 export type FindInArrayType = (
   array: ReelSymbolType[][],
   item: ReelSymbolType,
-  index: number,
-  result: ReelSymbolType[]
-) => void
+  index: number
+) => ReelSymbolType[]
