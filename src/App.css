@@ -10,19 +10,21 @@
 
 .sub-heading {
   font-family: 'Chango', cursive;
+  font-size: 1rem;
   color: wheat;
 }
 
 .legal-notice {
   font-family: 'Proza Libre', sans-serif;
   color: wheat;
+  font-size: 0.75rem;
   width: 60%;
-  margin: 0 auto 36px auto;
+  margin: 0 auto 10px auto;
 }
 
 .game-wrapper {
   width: 1024px;
-  height: 768px;
+  height: 600px;
   background-image: url('./assets/img/back-3.jpg');
   background-size: cover;
   margin: 0 auto;

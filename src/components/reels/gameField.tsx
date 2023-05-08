@@ -67,7 +67,6 @@ export function GameField() {
   const [hasWinner, setHasWinner] = useState(false)
   const [winMsg, setWinMsg] = useState<string>('')
   const [tint, setTint] = useState<string>('white')
-  // const [resetField, setResetField] = useState(false)
 
   const isSpinning = useAppSelector((state) => state.betting.isSpinning)
   const yPos = useAppSelector((state) => state.betting.drawResult)
@@ -87,9 +86,22 @@ export function GameField() {
   useEffect(() => {
     if (isSpinning) {
       setHasWinner(false)
-      // setResetField(true)
-      dispatch(decrementByAmount(betValue))
+      const reelsToReset: ReelSymbolType[][] = []
+      // console.log(reelsToReset)
+      allReelData.forEach((item) => {
+        const temp = [...item]
+        temp.forEach((el) => {
+          if (el.win) {
+            console.log(el)
+          }
+        })
+        reelsToReset.push(temp)
+      })
+      // console.log(reelsToReset)
+      setAllReelData(reelsToReset)
+
       setTint('white')
+      dispatch(decrementByAmount(betValue))
       setTimeout(() => {
         dispatch(setIsSpinning())
       }, 3000)
@@ -123,7 +135,6 @@ export function GameField() {
   useEffect(() => {
     const displays = document.querySelectorAll('.data-value')
     const coinDisplay = displays[displays.length - 1]
-
     gsap.from(coinDisplay, {
       textContent: prevCoinsAmount,
       duration: 0.5,
@@ -134,21 +145,13 @@ export function GameField() {
     setPrevCoinsAmount(coinsAmount)
   }, [coinsAmount])
 
-  // useEffect(() => {
-  //   const reelsToReset = [...allReelData]
-  //   reelsToReset.forEach((item) => item.map((el) => (el.win = false)))
-  //   console.log(reelsToReset)
-  //   // setAllReelData(()))
-  // }, [resetField])
-
   return (
-    <Stage width={1024} height={638} options={{ backgroundAlpha: 0.6 }}>
+    <Stage width={1024} height={524} options={{ backgroundAlpha: 0.6 }}>
       <Provider store={store}>
         <Container
           width={constants.SYMBOL_WIDTH * constants.REELS_QUANTITY}
           height={constants.SYMBOL_HEIGHT * constants.SYMBOLS_QUANTITY}
-          x={152}
-          y={30}
+          x={196}
         >
           <ReelsContainer
             reelsNumber={constants.REELS_QUANTITY}

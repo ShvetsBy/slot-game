@@ -19,7 +19,7 @@ export function ReelsContainer({
   useEffect(() => {
     for (let i = 0; i < reelsNumber; i++) {
       const item: ReelPositionType = {
-        x: i * width,
+        x: i * width * 1.8,
       }
       setRow((prev) => [...prev, item])
     }

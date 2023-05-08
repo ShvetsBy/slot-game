@@ -17,9 +17,10 @@ body {
 
 h1 {
   font-family: 'LaTequilaOut';
+  font-size: 1.5rem;
   color: wheat;
   margin: 0;
-  padding-top: 3%;
+  padding-top: 1%;
 }
 
 .spin-wheel{

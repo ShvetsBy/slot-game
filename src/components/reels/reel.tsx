@@ -49,7 +49,7 @@ export function ReelContainer({
       {symbolsData.map((el: ReelSymbolType) => (
         <Sprite
           image={images[el.name]}
-          y={height * yPositions[el.y]}
+          y={height * yPositions[el.y] * 1.75}
           tint={el.win ? 'white' : tint}
           filters={[blurFilter]}
           key={el.id}
