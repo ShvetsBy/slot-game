@@ -1,12 +1,12 @@
+![Screenshot 2023-05-08 at 13 08 49](https://user-images.githubusercontent.com/24583617/236808220-7c8b878e-809b-4204-95b2-993b4aea77a7.png)
 # slot-game
-
 TS Bootcamp course project
 
 Click here to check it out https://narcos-slot.surge.sh/
 How to play: click on drum in the center of bottom controls or press Space
+![Screenshot 2023-05-08 at 13 09 08](https://user-images.githubusercontent.com/24583617/236808172-f99f619a-1ffa-42d5-aa19-b1c09012a2c5.png)
 
 ## Stack
-
 Base: create react app with typescript
 Animations: react-pixi & gsap
 State managment: redux
