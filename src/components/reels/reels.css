@@ -1,0 +1,8 @@
+.reels-wrapper{
+    width: 720px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-self: center;
+    justify-self: center;
+}

@@ -1,0 +1,86 @@
+export const cardsData = [
+  {
+    id: '1',
+    name: 'ACard',
+    value: 2,
+    img: '../assets/cards/a-card.png',
+  },
+  {
+    id: '2',
+    name: 'JCard',
+    value: 2,
+    img: '../assets/cards/j-card.png',
+  },
+  {
+    id: '3',
+    name: 'KCard',
+    value: 2,
+    img: '../assets/cards/k-card.png',
+  },
+  {
+    id: '4',
+    name: 'QCard',
+    value: 2,
+    img: '../assets/cards/q-card.png',
+  },
+  {
+    id: '5',
+    name: 'Flamingo',
+    value: 3,
+    img: '../assets/cards/flamingo-card.png',
+  },
+  {
+    id: '6',
+    name: 'Plane',
+    value: 3,
+    img: '../assets/cards/plane-card.png',
+  },
+  {
+    id: '7',
+    name: 'Gun',
+    value: 4,
+    img: '../assets/cards/gun-card.png',
+  },
+  {
+    id: '8',
+    name: 'WalkieTalkie',
+    value: 4,
+    img: '../assets/cards/walkie-talkie-card.png',
+  },
+  {
+    id: '9',
+    name: 'Jerk',
+    value: 4,
+    img: '../assets/cards/jerk-card.png',
+  },
+  {
+    id: '10',
+    name: 'Girl',
+    value: 4,
+    img: '../assets/cards/girl-card.png',
+  },
+  {
+    id: '11',
+    name: 'WildCard',
+    value: 5,
+    img: '../assets/cards/wild-card.png',
+  },
+  {
+    id: '12',
+    name: 'WildFire',
+    value: 5,
+    img: '../assets/cards/wild-fire.png',
+  },
+  {
+    id: '13',
+    name: 'FreeSpins',
+    value: 5,
+    img: '../assets/cards/free-spins-card.png',
+  },
+  {
+    id: '14',
+    name: 'CatchMe',
+    value: 6,
+    img: '../assets/cards/catch-card.png',
+  },
+]

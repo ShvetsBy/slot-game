@@ -1,0 +1,28 @@
+@font-face {
+  font-family: 'LaTequila';
+  src: local('LaTequila'), url(./assets/fonts/LaTequila.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'LaTequilaOut';
+  src: local('LaTequilaOut'), url(./assets/fonts/LaTequilaOut.ttf) format('truetype');
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+  font-family: 'LaTequilaOut';
+  font-size: 1.5rem;
+  color: wheat;
+  margin: 0;
+  padding-top: 1%;
+}
+
+.spin-wheel{
+  background-image: url('./assets/img/fire-rounded.png');
+}
