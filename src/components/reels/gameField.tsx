@@ -87,22 +87,16 @@ export function GameField() {
     if (isSpinning) {
       setHasWinner(false)
       setTint('white')
-      const reelsToReset: ReelSymbolType[][] = []
-      // console.log(reelsToReset)
-      // allReelData.forEach((item) => {
-      //   const temp = [...item]
-      //   temp.forEach((el) => {
-      //     if (el.win) {
-      //       el.win = false
-      //       console.log(el)
-      //     }
-      //   })
-      //   console.log()
-      //   reelsToReset.push(temp)
-      // })
-      // // console.log(reelsToReset)
-      // setAllReelData(reelsToReset)
+      const reelsToReset: ReelSymbolType[][] = [...allReelData]
 
+      reelsToReset.forEach((item) => {
+        item.forEach((el) => {
+          el.win = false
+        })
+      })
+
+      setAllReelData(reelsToReset)
+      console.log(allReelData)
       dispatch(decrementByAmount(betValue))
       setTimeout(() => {
         dispatch(setIsSpinning())
